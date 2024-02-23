@@ -7,3 +7,21 @@ You are free to organize the contents of the folder as you see fit. But remember
 
 ## Please use the rest of the README.md to store important information for your team's application.
 
+## project structure 
+
+- application/
+  - public/      (static files)
+    - css/  
+    - js/
+    - images/
+  - views/      (for EJS templates)
+  - server.js   (main server file)    
+
+## Build instructions
+- npm i
+
+## Run instructions (preform every time change is made)
+- npm run dev
+- open localhost 3000 
+
+
