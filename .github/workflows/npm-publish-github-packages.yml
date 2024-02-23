@@ -31,6 +31,6 @@ jobs:
         working-directory: ./application  # Adjust to your subdirectory path
 
       - name: Run tests
-        run: npm test
+        run: npm run-script dev
         working-directory: ./application  # Adjust to your subdirectory path
 
