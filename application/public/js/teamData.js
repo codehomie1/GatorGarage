@@ -16,8 +16,8 @@ const teamInfo = [
       name: "Akram Alraeeini",
       role: "GitHub Master",
       bio: "Akram is a senior CS student at San Francisco State University. He's passionate about software development, UX design," + 
-      "and AI. In his free time, Akram like reading books and watching European Soccer.",
-      image: "profile-akram.jpg"
+      "and AI. In his free time, Akram likes reading books and watching European Soccer.",
+      image: "../../Images/profile-akram.png"
    },
     {
       id:3,

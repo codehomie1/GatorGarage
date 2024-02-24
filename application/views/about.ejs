@@ -17,7 +17,7 @@
                 <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
                     <a href="/about/<%= member.id %>" target="_blank">
                     <div id="<%= member.id %>" class="card h-100 shadow"> <!-- Add h-100 class to make cards the same height -->
-                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+                        <img src="/images/<%= member.image %>" class="card-img-top" alt="<%= member.name %>">
                         <div class="card-body">
                             <h5 id="name" class="card-title fs-4"><%= member.name %></h5>
                             <p class="card-text fs-6 "><%= member.role %></p>
@@ -30,4 +30,3 @@
     </div>
 </body>
 </html>
-

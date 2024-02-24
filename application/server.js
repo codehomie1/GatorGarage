@@ -12,6 +12,10 @@ app.get('/', (req, res, next) => {
     res.render('index');
 });
 
+app.get('/members', function(req, res) {
+    const teamInfo = require('./teamData');
+    res.render('member', { teamInfo: teamInfo });
+});
 // Use the aboutRouter for the /about endpoint
 app.use('/about', aboutRouter);
 

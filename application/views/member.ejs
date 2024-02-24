@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %>
+    <style>
+        .card-body img {
+            width: 150px; /* Adjust as needed */
+            height: 150px; /* Adjust as needed */
+            object-fit: cover; /* This will ensure that the image covers the entire area of the img element without distorting the aspect ratio */
+        }
+    </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
@@ -12,7 +19,7 @@
                 <h5 class="card-title"><%= data.name %></h5>
             </div>
             <div class="card-body">
-                <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="Profile Picture">
+                <img src="/images/<%= data.image %>" class="rounded-circle mb-3" alt="<%= data.name %>">
                 <p class="card-text">Role: <%= data.role %></p>
                 <p class="card-text">Bio: <%= data.bio %></p>
             </div>
