@@ -60,5 +60,3 @@ jobs:
             npm ci
             pkill -9 node
             nohup npm start > /dev/null 2>&1 &
-            
-     
