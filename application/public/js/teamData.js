@@ -7,13 +7,14 @@ const teamInfo = [
    {
       name: "Utku Tarhan",
       role: "Team Lead",
-      bio: "",
+      bio: "Utku is a student in San Francisco State University, majoring in Computer Science. Utku is focused developing projects in Swift, C and Python. Utku spends his free time listening to music, playing computer games and watching movies. He is extremely excited about emerging technologies and new fields in tech industry.",
       image: "profile-utku.jpg"
    },
   {
       name: "Akram Alraeeini",
       role: "GitHub Master",
-      bio: "",
+      bio: "Akram is a senior CS student at San Francisco State University. He's passionate about software development, UX design," + 
+      "and AI. In his free time, Akram like reading books and watching European Soccer.",
       image: "profile-akram.jpg"
    },
     {
