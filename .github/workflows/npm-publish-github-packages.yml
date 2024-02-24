@@ -37,16 +37,15 @@ jobs:
       
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Execute only on push to main branch
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && && steps.build.outcome == 'success' # Execute only on push to main branch
     steps:
       - name: Clean Install Test
         run: npm ci
         working-directory: ./application  # Adjust to your subdirectory path
 
-      ### Tests should go here 
-      #
-      #
-
+      - name: Execute Unit Tests
+        run: npm test
+        working-directory: ./application  # Adjust to your subdirectory path
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
