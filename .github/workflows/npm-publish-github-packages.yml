@@ -26,11 +26,10 @@ jobs:
         with:
           node-version: 16
     
-      - name: Build Clean Install Testg
+      - name: Clean Install Test
         run: npm ci
         working-directory: ./application  # Adjust to your subdirectory path
 
       #- name: Run tests
       #  run: npm run-script dev
       #  working-directory: ./application  # Adjust to your subdirectory path
-
