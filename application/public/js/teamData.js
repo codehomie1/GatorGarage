@@ -23,8 +23,9 @@ const teamInfo = [
       id:3,
       name: "Mohammed Mohamed",
       role: "Frontend Lead",
-      bio: "",
-      image: "https://placehold.co/600x400"
+      bio: "Mohammed is in his final undergrad semester at SFSU. He enjoys software development, problem solving and teamwork. His aspirations is to extend his learning journey and complete and Masters degree." +
+      "In his free time you can find him playing sports, going to the gym, or hanging out with family and friends.",
+      image: "profile-mohamed.jpg"
     },
     {
       id:4,
