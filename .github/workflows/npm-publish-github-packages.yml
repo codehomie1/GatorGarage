@@ -39,6 +39,6 @@ jobs:
             git pull origin main
             npm ci
             pkill -9 node
-            nohup npm start &
+            nohup npm start > /dev/null 2>&1 &
             
      
