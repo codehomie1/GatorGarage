@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container text-center">
+        <h1 class="my-4">Team Member Information</h1>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><%= data.name %></h5>
+            </div>
+            <div class="card-body">
+                <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="Profile Picture">
+                <p class="card-text">Role: <%= data.role %></p>
+                <p class="card-text">Bio: <%= data.bio %></p>
+            </div>
+            <div class="card-footer">
+                <a href="/about" class="btn btn-primary">Back to Team</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

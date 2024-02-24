@@ -11,16 +11,14 @@ You are free to organize the contents of the folder as you see fit. But remember
 
 - application/
   - public/      (static files)
-    - css/  
-    - js/
-    - images/
   - views/      (for EJS templates)
+  - routes/     (routing to paths)
   - server.js   (main server file)    
 
 ## Build instructions
 - npm i
 
-## Run instructions (preform every time change is made)
+## Run instructions 
 - npm run dev
 - open localhost 3000 
 
