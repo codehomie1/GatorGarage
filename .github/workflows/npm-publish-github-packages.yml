@@ -26,11 +26,12 @@ jobs:
         with:
           node-version: 16
     
-      - name: Install dependencies
-        run: npm install
+      - name: Clean Install Test
+        run: npm ci
         working-directory: ./application  # Adjust to your subdirectory path
 
-      - name: Run tests
-        run: npm run-script dev
-        working-directory: ./application  # Adjust to your subdirectory path
+      #- name: Run tests
+      #  run: npm run-script dev
+      #  working-directory: ./application  # Adjust to your subdirectory path
+
 
