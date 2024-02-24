@@ -15,9 +15,9 @@
         <div class="row justify-content-center p-3">
             <% teamInfo.forEach(member => { %>
                 <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
-                    <a href="/about/<%= member.id %>" target="_blank">
+                    <a href="/about/<%= member.id %>">
                     <div id="<%= member.id %>" class="card h-100 shadow"> <!-- Add h-100 class to make cards the same height -->
-                        <img src="/images/<%= member.image %>" class="card-img-top" alt="<%= member.name %>">
+                        <img src="/img/<%= member.id %><%=member.type %>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 id="name" class="card-title fs-4"><%= member.name %></h5>
                             <p class="card-text fs-6 "><%= member.role %></p>
