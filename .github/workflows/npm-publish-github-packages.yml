@@ -7,9 +7,6 @@ on:
   push:
     branches:
       - main
-      - staging
-      - develop
-      - 'feature/*'  # Match all feature branches
 
   pull_request:
     branches:
@@ -30,6 +27,38 @@ jobs:
         run: npm ci
         working-directory: ./application  # Adjust to your subdirectory path
 
-      #- name: Run tests
-      #  run: npm run-script dev
-      #  working-directory: ./application  # Adjust to your subdirectory path
+      - name: Execute Unit Tests
+        run: npm test
+        working-directory: ./application  # Adjust to your subdirectory path
+
+      ### Tests should go here 
+      #
+      #
+      
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && && steps.build.outcome == 'success' # Execute only on push to main branch
+    steps:
+      - name: Clean Install Test
+        run: npm ci
+        working-directory: ./application  # Adjust to your subdirectory path
+
+      - name: Execute Unit Tests
+        run: npm test
+        working-directory: ./application  # Adjust to your subdirectory path
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ~/git/csc648-sp24-03-Team06/application
+            git pull origin main
+            npm ci
+            pkill -9 node
+            nohup npm start > /dev/null 2>&1 &
+            
+     
