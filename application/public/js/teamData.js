@@ -9,7 +9,7 @@ const teamInfo = [
       name: "Utku Tarhan",
       role: "Team Lead",
       bio: "Utku is a student in San Francisco State University, majoring in Computer Science. Utku is focused developing projects in Swift, C and Python. Utku spends his free time listening to music, playing computer games and watching movies. He is extremely excited about emerging technologies and new fields in tech industry.",
-      image: "profile-utku.jpg"
+      image: "../../Images/profile-utku.png"
    },
   {
       id:2,
