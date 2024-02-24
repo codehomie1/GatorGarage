@@ -2,77 +2,31 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %> <!-- Include the contents of head file -->
+    <link rel="stylesheet" href="../public/css/about.css">
 </head>
 <body>
 <%- include('./partials/nav') %> <!-- Include the navbar -->
 <!-- specific page info-->
-    <h1>About Us</h1>
-    <p>This is some information about our team:</p>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
+    <div class="text-center">
+        <h1>About Us</h1>
+        <p>Meet the Team</p>
+    </div>
+    <div class="container-fluid text-center">
+        <div class="row justify-content-center p-3">
+            <% teamInfo.forEach(member => { %>
+                <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
+                    <a href="/about/<%= member.id %>">
+                    <div id="<%= member.id %>" class="card h-100 shadow"> <!-- Add h-100 class to make cards the same height -->
+                        <img src="/img/<%= member.id %><%=member.type %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 id="name" class="card-title fs-4"><%= member.name %></h5>
+                            <p class="card-text fs-6 "><%= member.role %></p>
+                        </div>
                     </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Alice Johnson</h5>
-                        <p class="card-text">Role: Product Manager</p>
-                        <p class="card-text">Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo vitae mi sollicitudin auctor.</p>
-                    </div>
-                </div>
-            </div>
+            <% }); %>
         </div>
     </div>
 </body>
 </html>
-
