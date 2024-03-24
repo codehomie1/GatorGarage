@@ -39,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' && && steps.build.outcome == 'success' # Execute only on push to main branch
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      
       - name: Clean Install Test
         run: npm ci
         working-directory: ./application  # Adjust to your subdirectory path
@@ -60,5 +63,3 @@ jobs:
             npm ci
             pkill -9 node
             nohup npm start > /dev/null 2>&1 &
-            
-     
