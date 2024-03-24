@@ -38,6 +38,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Execute only on push to main branch
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
