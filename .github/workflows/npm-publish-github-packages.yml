@@ -13,7 +13,8 @@ on:
       - main
       - staging
       - develop
-       - 'feature/*'  # Match all feature branches
+      - features
+      - 'feature-*'  # Match all feature branches
 jobs:
   build:
     runs-on: ubuntu-latest
