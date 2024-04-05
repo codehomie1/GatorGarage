@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body class="d-flex flex-column vh-100">
+        <%- include('./partials/nav') %>
+
+        <h1>Results</h1>
+        <p>
+            <% if (isEmptyResult) { %>
+                No results found for "<%= searchQuery %>", but here are some curated selections:
+            <% } else { %>
+                <%= items.length %> out of <%= totalResults %> results for "<%= searchQuery %>"
+            <% } %>
+        </p>
+
+        <main class="container mt-4">
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <% items.forEach(item => { %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="<%= item.itemPicture %>" class="card-img-top"
+                                 alt="Image of <%= item.itemName %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= item.itemName %></h5>
+                                <% if (item.course) { %>
+                                    <p class="card-text"><strong>Course:</strong> <%= item.course %></p>
+                                <% } %>
+                                <p class="card-text"><strong>Description:</strong> <%= item.itemDescription %></p>
+                                <p class="card-text"><strong>Price:</strong> $<%= item.itemPrice %></p>
+                                <button type="button" class="btn btn-primary mt-3">View Details</button>
+                                <button type="button" class="btn btn-primary mt-3">Message Seller</button>
+
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </main>
+
+        <%- include('./partials/footer') %>
+    </body>
+</html>
