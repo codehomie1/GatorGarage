@@ -5,28 +5,76 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-
-<!-- <header>
-    <h1>Team 6 Project</h1>
-    <ul>
-        <li><a href="/">home</a></li>
-        <li><a href="/about">about</a></li>
-    </ul>
-</header> -->
-    
-<!-- nav.ejs -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand font-weight-bold" style="font-size: 30px">Team 6 Project</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-        </ul>
-        
+<!-- Header -->
+<div class="container-fluid bg-light">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 text-center">
+            <h1 class="navbar-brand mb-0">CSC 648 Spring 2024 Team 6 Project</h1>
+        </div>
     </div>
-  </nav>
-  
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <!-- Toggler Button for Mobile -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item mx-3">
+                    <a class="nav-link pl-5" href="/">Home</a>
+                </li>
+
+                <!-- Dashboard -->
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+
+                <!-- Search Bar -->
+                <li class="nav-item mx-3">
+                    <form id="searchForm" class="form-inline my-2 my-lg-0" action="/search" method="GET"> 
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button id="category-btn" class="btn btn-outline-dark dropdown-toggle" 
+                                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
+                                <div class="dropdown-menu">
+                                    <% categories.forEach(category => { %>
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span><%= category %></span>
+                                        </a>
+                                    <% }); %>
+                                </div>
+                            </div>
+                            <input id="searchInput" class="form-control" type="search" name="query" 
+                            placeholder="Search..." aria-label="Search" style="width: 20em;">
+                            <input type="hidden" name="category" value="">
+                            <button class="btn btn-outline-dark" type="submit">
+                                <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+                            </button>
+                        </div>
+                    </form>
+                    
+                </li>
+                <!-- About -->
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+
+                <!-- Post -->
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Post</a>
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
