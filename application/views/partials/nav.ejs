@@ -6,52 +6,51 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- <link rel="stylesheet" href="/css/nav.css"> -->
 
 <!-- Header -->
-<div class="container-fluid bg-light">
+<div class="container-fluid bg-warning text-dark border py-1">
     <div class="row justify-content-center">
-        <div class="col-12 col-lg-8 text-center">
-            <h1 class="navbar-brand mb-0">CSC 648 Spring 2024 Team 6 Project</h1>
+        <div class="text-center">
+            <p class="mb-0">SFSU Software Engineering Project CSC 648-848, Spring 2024. For Demonstration Only</p>
         </div>
     </div>
 </div>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
         <!-- Toggler Button for Mobile -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler collapsed">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Navbar Content -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div id="navbarNav" class="navbar-collapse justify-left collapse">
+            <ul class="navbar-nav d-flex align-items-baseline" style="width: 100%;">
                 <li class="nav-item mx-3">
-                    <a class="nav-link pl-5" href="/">Home</a>
+                    <a href="/" class="nav-link">Home</a>
                 </li>
 
                 <!-- Dashboard -->
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link btn btn-light-grey" href="#">Dashboard</a>
                 </li>
 
                 <!-- Search Bar -->
-                <li class="nav-item mx-3">
-                    <form id="searchForm" class="form-inline my-2 my-lg-0" action="/search" method="GET"> 
+                <li class="nav-item mx-3 ml-auto w-50">
+                    <form id="searchForm" action="/search" method="GET" class="d-flex my-2"> 
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button id="category-btn" class="btn btn-outline-dark dropdown-toggle" 
-                                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
+                                <button id="category-btn" class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
                                 <div class="dropdown-menu">
                                     <% categories.forEach(category => { %>
                                         <a class="dropdown-item" href="#" data-category="">
-                                            <span><%= category %></span>
+                                            <span><%= category.categoryName %></span>
                                         </a>
                                     <% }); %>
                                 </div>
                             </div>
-                            <input id="searchInput" class="form-control" type="search" name="query" 
-                            placeholder="Search..." aria-label="Search" style="width: 20em;">
+                            <input id="searchInput" type="search" name="query" placeholder="Search..." aria-label="Search" class="form-control">
                             <input type="hidden" name="category" value="">
                             <button class="btn btn-outline-dark" type="submit">
                                 <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
@@ -60,18 +59,13 @@
                     </form>
                     
                 </li>
-                <!-- About -->
-                <li class="nav-item mx-3">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-
                 <!-- Post -->
                 <li class="nav-item mx-3">
                     <a class="nav-link" href="#">Post</a>
                 </li>
 
                 <!-- Login -->
-                <li class="nav-item mx-3">
+                <li style="justify-self: last baseline;" class="nav-item mx-3 ml-auto">
                     <a class="nav-link" href="#">Login</a>
                 </li>
             </ul>

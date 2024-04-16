@@ -1,3 +1,18 @@
+/*Custom CSS to supplement bootstrap CSS*/
+
 .box-shadow {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */
+}
+
+.carousel-fade .carousel-item {
+    opacity: .4;
+    transition: opacity 2s;
+}
+
+.carousel-control-prev {
+  transform: translateX(-60%);
+}
+
+.carousel-control-next {
+  transform: translateX(60%);
 }

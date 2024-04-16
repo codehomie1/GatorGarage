@@ -15,7 +15,7 @@ app.use(express.static('public'));
 app.get('/', async (req, res, next) => {
     console.log("/");
     try {
-        const categories = await getCategoriesModule.getCategories(req, res, next);
+        const categories = await getCategoriesModule.getCategoriesWithPictures(req, res, next);
         res.render('index', {categories: categories});
     } catch (error) { 
         console.error(error);
@@ -43,7 +43,7 @@ app.get('/members', function(req, res) {
     res.render('member', { teamInfo: teamInfo });
 });
 
-// Use the aboutRouter for the /about endpoint
+
 app.use('/about', aboutRouter);
 
 

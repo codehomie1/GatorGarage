@@ -3,12 +3,13 @@
 <head>
     <%- include('./partials/head') %> <!-- Include the contents of head file -->
 </head>
-    <body class="d-flex flex-column vh-100">
+    <body>
 <%- include('./partials/nav') %> <!-- Include the navbar -->
+
 <!-- specific page info-->
+<div id="page-content" class="container-fluid text-center align-items-center" style="min-height: 100vh;">
     <div class="text-center">
-        <h1>About Us</h1>
-        <p>Meet the Team</p>
+        <p class="display-4 p-5">Meet Team 6</p>
     </div>
     <div class="container-fluid text-center">
         <div class="row justify-content-center p-3">
@@ -27,6 +28,7 @@
             <% }); %>
         </div>
     </div>
+</div>
 <%- include('./partials/footer') %> <!-- Include the footer -->
 </body>
 </html>
