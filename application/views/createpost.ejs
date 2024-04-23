@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('./partials/head') %>
+    <style>
+      .card-body img {
+        width: 150px;
+        /* Adjust as needed */
+        height: 150px;
+        /* Adjust as needed */
+        object-fit: cover;
+        /* This will ensure that the image covers the entire area of the img element without distorting the aspect ratio */
+      }
+    </style>
+</head>
+
+<body>
+  <%- include('./partials/nav') %>
+  <div id="page-content" style="min-height: 100vh;" class="container text-center border-dark mt-5">
+    <!-- Page Content -->
+    <h2 class="mb-5 display-5 mt-3">Submit a Post</h2>
+    <div class="container row d-flex mt-5">
+      <div class="col-md-6">
+        <form class="submit-post-form" data-gtm-form-interact-id="0">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title*</label>
+            <input type="text" id="title" name="title" required="" <="" div="" data-gtm-form-interact-field-id="1" class="form-control mb-3 is-invalid" placeholder="Enter Title here...">
+            <div class="mb-3">
+              <label for="course" class="form-label">Course</label>
+              <input type="text" class="form-control" id="course" name="course" placeholder="Ex: CSC 648">
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">Category*</label>
+              <input type="text" class="form-control is-invalid" id="category" name="category" required="" data-gtm-form-interact-field-id="2" placeholder="Ex: Books">
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price*</label>
+              <input type="number" class="form-control is-invalid" id="price" name="price" required="" data-gtm-form-interact-field-id="0">
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Location*</label>
+              <input type="text" class="form-control is-invalid" id="location" name="location" required="" data-gtm-form-interact-field-id="1" placeholder="SFSU Location">
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description*</label>
+              <textarea class="form-control is-invalid" id="description" name="description" rows="3" required="" data-gtm-form-interact-field-id="0" placeholder="Enter your compelling description here..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">Upload Image*</label>
+              <input type="file" class="form-control" id="image" name="image" data-gtm-form-interact-field-id="0" required="">
+            </div>
+            <button type="submit" class="btn btn-primary w-50">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <div class="display-5 mb-3 mt-3">Preview Image</div>
+          <!-- TODO : might not work in production , need to check how it handles images -->
+          <img src="blob:http://localhost:3000/2109260d-90d3-4815-9179-50e143832049" alt="Upload image to show preview" id="preview-image" width="300" height="300" class="preview-image img-fluid border border-dark">
+        </div>
+      </div>
+    </div>
+  </div>
+    <%- include('./partials/footer') %>
+      <script>
+        // script for showing image
+        document.getElementById('image').addEventListener('change', function (event) {
+          const preview = document.getElementById('preview-image');
+          preview.src = URL.createObjectURL(event.target.files[0]);
+        });
+      </script>
+</body>
+
+</html>

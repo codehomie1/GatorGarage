@@ -4,9 +4,10 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */
 }
 
+/* Homepage Category Display */
 .carousel-fade .carousel-item {
-    opacity: .4;
-    transition: opacity 2s;
+  opacity: .4;
+  transition: opacity 2s;
 }
 
 .carousel-control-prev {
@@ -15,4 +16,9 @@
 
 .carousel-control-next {
   transform: translateX(60%);
+}
+
+/* Site Access Modals: Sign up, Login */
+.modal-title {
+  margin-right: -48px; /* Align title center */
 }

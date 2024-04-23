@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+        
+    </head>
+    <body class="d-flex flex-column vh-100">
+        <%- include('./partials/nav') %>
+        <%- include('./partials/message') %>
+
+        <!-- <h1>Item Details</h1> -->
+        
+        <div class="container mt-4 pt-5">
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <!-- Item Image -->
+                    <img src="<%= post.itemPicture %>" alt="<%= post.itemName %>" class="img-fluid">
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Product Information -->
+                    <div class="ml-md-3">
+                        <!-- Seller Information -->
+                        <h4><%= post.sellerName %></h4>
+                        <hr class="hr bg-dark"> 
+
+                        <!-- Product Title -->
+                        <h2 class="mb-3"><%= post.itemName %></h2>
+
+                        <% if (post.course) { %>
+                            <!-- Course Number -->
+                            <h5 class="font-weight-normal pb-2"><%= post.course %></h5>
+                        <% } %>
+                        
+
+                        <!-- Location -->
+                        <p>Pickup location: <%= post.location %></p>
+
+                        <!-- Product Description -->
+                        <p><%= post.itemDescription %></p>
+                        
+                        <!-- Cost -->
+                        <h4 class="mb-3">$<%= post.itemPrice %></h4>
+                        
+                        <!-- Message Button -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messageModal">Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('./partials/footer') %>
+    </body>
+</html>

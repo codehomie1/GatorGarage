@@ -6,7 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- <link rel="stylesheet" href="/css/nav.css"> -->
+<%- include('signupLoginModals') %>
 
 <!-- Header -->
 <div class="container-fluid bg-warning text-dark border py-1">
@@ -16,6 +16,7 @@
         </div>
     </div>
 </div>
+
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
 
@@ -27,22 +28,25 @@
         <!-- Navbar Content -->
         <div id="navbarNav" class="navbar-collapse justify-left collapse">
             <ul class="navbar-nav d-flex align-items-baseline" style="width: 100%;">
-                <li class="nav-item mx-3">
-                    <a href="/" class="nav-link">Home</a>
+                <li class="nav-item mx-1">
+                    <a href="/" class="nav-link">
+                        <img src="/img/logo/logoRe.png" alt="Gator Garage Logo" style="width: 130px;">
+                    </a>
                 </li>
 
                 <!-- Dashboard -->
                 <li class="nav-item mx-3">
-                    <a class="nav-link btn btn-light-grey" href="#">Dashboard</a>
+                    <a class="nav-link btn btn-light-grey btn btn-outline-dark" href="/dashboard">Dashboard</a>
                 </li>
 
                 <!-- Search Bar -->
-                <li class="nav-item mx-3 ml-auto w-50">
+                <li class="nav-item mx-5 ml-auto w-50">
                     <form id="searchForm" action="/search" method="GET" class="d-flex my-2"> 
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button id="category-btn" class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
                                 <div class="dropdown-menu">
+                                    <!--TODO manually display categories-->
                                     <% categories.forEach(category => { %>
                                         <a class="dropdown-item" href="#" data-category="">
                                             <span><%= category.categoryName %></span>
@@ -50,7 +54,7 @@
                                     <% }); %>
                                 </div>
                             </div>
-                            <input id="searchInput" type="search" name="query" placeholder="Search..." aria-label="Search" class="form-control">
+                            <input id="searchInput" type="search" name="query" placeholder="Search..." aria-label="Search" class="form-control" maxlength="40">
                             <input type="hidden" name="category" value="">
                             <button class="btn btn-outline-dark" type="submit">
                                 <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
@@ -61,12 +65,12 @@
                 </li>
                 <!-- Post -->
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="#">Post</a>
+                    <a class="nav-link btn btn-outline-dark" href="/createpost">Post</a>
                 </li>
 
                 <!-- Login -->
-                <li style="justify-self: last baseline;" class="nav-item mx-3 ml-auto">
-                    <a class="nav-link" href="#">Login</a>
+                <li style="justify-self: last baseline;" class="nav-item mx-0">
+                    <a class="nav-link btn btn-success" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
                 </li>
             </ul>
         </div>

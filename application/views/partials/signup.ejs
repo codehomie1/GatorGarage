@@ -1,0 +1,77 @@
+<!-- Sign Up Modal Structure -->
+<div class="modal" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true"
+     novalidate>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center" id="signupModalLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="signupForm">
+                    <!-- First and Last Name Inputs on the same line -->
+                    <div class="form-row"> <!-- Bootstrap row for grid system -->
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" id="firstname" placeholder="First name" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control" id="lastname" placeholder="Last name" required>
+                        </div>
+                    </div>
+
+                    <!-- Email Input with validation for SFSU email addresses -->
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="sfsuEmailSignup" placeholder="SFSU email" required
+                               pattern=".*@sfsu\.edu$|.*@mail\.sfsu\.edu$">
+                        <div class="invalid-feedback">
+                            Please enter a valid SFSU email address (e.g., yourname@sfsu.edu or yourname@mail.sfsu.edu).
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Password Input using Bootstrap Grid for smaller field -->
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" id="passwordSignup" placeholder="Password"
+                                   required>
+                        </div>
+
+                        <!-- Confirm Password Input using Bootstrap Grid for smaller field-->
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   placeholder="Confirm password" required>
+                        </div>
+                    </div>
+
+
+                    <!-- Terms of Service Checkbox with Text Centered -->
+                    <div class="form-group form-check text-center">
+                        <input type="checkbox" class="form-check-input" id="tosCheck" required>
+                        <label class="form-check-label" for="tosCheck">I accept the <a href="#">Terms of
+                                Service</a></label>
+                    </div>
+
+                    <!-- Sign Up Button -->
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+
+                    <!-- Log In Link -->
+                    <div class="form-group text-center">
+                        Already have an account?
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#loginModal"
+                                data-dismiss="modal">Log in
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
