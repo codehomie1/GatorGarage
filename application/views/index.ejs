@@ -16,7 +16,7 @@
                 <div class="col-md-6 d-flex flex-column">
                     <div class="row mb-3 flex-grow-1">
                         <h1 class="fs-2 p-3">Welcome to Gator Garage</h1>
-                        <p class="fs-3">
+                        <p class="lead">
                             Your ultimate destination
                             for seamless trade and services
                             within the SFSU community!
@@ -48,7 +48,7 @@
 
         <!-- Category display: carousel with 3 items per slide -->
         <div id="categoryDisplay" class="container mt-5 p-4 bg-light-subtle rounded">
-            <h2 class="text-center fs-3">Categories</h2>
+            <h2 class="text-center display-6">Categories</h2>
 
 
             <div id="categoryCarousel" class="carousel carousel-fade carousel-dark pt-3 pb-5"
@@ -74,7 +74,7 @@
                                         <img src="<%= category.categoryPicture %>"
                                              alt="<%= category.categoryName %>"
                                              style="width:100%; max-width:500rem; height:auto;">
-                                        <p class="fw-bold"><%= category.categoryName %></p>
+                                        <p class="lead "><%= category.categoryName %></p>
                                     </a>
                                 </div>
                                 <% if(index % 3 === 2 || index === categories.length - 1){ %>
