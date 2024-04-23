@@ -1,5 +1,4 @@
 
-
 const {getCategories} = require('../../../middleware/getCategories.js');
 const {getCategoriesWithPictures} = require('../../../middleware/getCategories.js');
 
