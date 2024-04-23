@@ -1,5 +1,5 @@
 <!-- Login Modal Structure -->
-<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true" novalidate>
+<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -12,12 +12,12 @@
 
             <!-- Modal Body -->
             <div class="modal-body">
-                <form id="loginForm">
+                <form id="loginForm" class="needs-validation" novalidate>
 
                     <!-- Email Input with validation for SFSU email addresses -->
                     <div class="form-group">
                         <input type="email" class="form-control" id="sfsuEmailLogin" placeholder="SFSU email" required
-                               pattern=".*@sfsu\.edu$|.*@mail\.sfsu\.edu$">
+                               pattern=".*@sfsu\.edu$|.*@mail\.sfsu\.edu$" onchange="validateEmail()">
                         <div class="invalid-feedback">
                             Please enter a valid SFSU email address (e.g., yourname@sfsu.edu or yourname@mail.sfsu.edu).
                         </div>
