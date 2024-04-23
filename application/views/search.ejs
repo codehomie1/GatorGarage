@@ -25,15 +25,15 @@
                 <% items.forEach(item => { %>
                     <div class="col">
                         <div class="card h-100 m-auto" style="max-width: 18rem;">
-                            <img src="<%= item.itemPicture %>" class="card-img-top"
+                            <img src="<%= item.itemPicture %>" class="card-img-top" style="height: 150px; object-fit: cover;"
                                  alt="Image of <%= item.itemName %>">
                             <div class="card-body">
                                 <h5 class="card-title"><%= item.itemName %></h5>
                                 <% if (item.course) { %>
-                                    <p class="card-text"><strong>Course:</strong> <%= item.course %></p>
+                                    <p class="card-text mb-0"><strong>Course:</strong> <%= item.course %></p>
                                 <% } %>
-                                <p class="card-text"><strong>Description:</strong> <%= item.itemDescription %></p>
-                                <p class="card-text"><strong>Price:</strong> $<%= item.itemPrice %></p>
+                                <p class="card-text mb-0"><strong>Description:</strong> <%= item.itemDescription %></p>
+                                <p class="card-text mb-0"><strong>Price:</strong> $<%= item.itemPrice %></p>
                                 <!---<button type="button" class="btn btn-primary mt-3" onclick="window.location.href='/item-details/<%# item.postId %>'">View Details</button> -->
                                 <button type="button" class="btn btn-primary mt-3 message-button" data-toggle="modal" data-target="#messageModal" data-post-id="<%= item.postId %>">Message Seller</button>
                             </div>
