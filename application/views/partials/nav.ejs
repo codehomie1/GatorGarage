@@ -17,41 +17,75 @@
     </div>
 </div>
 
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+
+<nav class="navbar navbar-expand-md navbar-light bg-light p-1">
     <div class="container-fluid">
 
         <!-- Toggler Button for Mobile -->
-        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler collapsed">
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler" aria-expanded="true">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Navbar Content -->
-        <div id="navbarNav" class="navbar-collapse justify-left collapse">
-            <ul class="navbar-nav d-flex align-items-baseline" style="width: 100%;">
-                <li class="nav-item mx-1">
+
+        <div id="navbarNav" class="navbar-collapse collapse show" style="margin: auto;">
+            <ul style="min-width: 100%;margin: auto;" class="navbar-nav d-flex align-items-baseline justify-content-center">
+                <li class="nav-item">
                     <a href="/" class="nav-link">
                         <img src="/img/logo/logoRe.png" alt="Gator Garage Logo" style="width: 130px;">
                     </a>
                 </li>
 
                 <!-- Dashboard -->
-                <li class="nav-item mx-3">
-                    <a class="nav-link btn btn-light-grey btn btn-outline-dark" href="/dashboard">Dashboard</a>
+
+                <li class="nav-item" style="min-width: 8%;">
+                    <a href="/dashboard" style="" class="nav-link btn btn-info text-white">Dashboard</a>
                 </li>
 
                 <!-- Search Bar -->
-                <li class="nav-item mx-5 ml-auto w-50">
-                    <form id="searchForm" action="/search" method="GET" class="d-flex my-2"> 
+                <li class="nav-item mx-5 w-80" style="min-width: 30%;">
+                    <form id="searchForm" action="/search" method="GET" class="d-flex my-2" style="flex-wrap: nowrap;"> 
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button id="category-btn" class="btn btn-outline-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
                                 <div class="dropdown-menu">
                                     <!--TODO manually display categories-->
-                                    <% categories.forEach(category => { %>
+                                    
                                         <a class="dropdown-item" href="#" data-category="">
-                                            <span><%= category.categoryName %></span>
+                                            <span>All</span>
                                         </a>
-                                    <% }); %>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Books</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Technology</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Clothing</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>School Supplies</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Furniture</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Appliances</span>
+                                        </a>
+                                    
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Sports and Fitness</span>
+                                        </a>
+                                        <a class="dropdown-item" href="#" data-category="">
+                                            <span>Miscellaneous</span>
+                                        </a>
+                                    
                                 </div>
                             </div>
                             <input id="searchInput" type="search" name="query" placeholder="Search..." aria-label="Search" class="form-control" maxlength="40">
@@ -64,12 +98,12 @@
                     
                 </li>
                 <!-- Post -->
-                <li class="nav-item mx-3">
-                    <a class="nav-link btn btn-outline-dark" href="/createpost">Post</a>
+                <li class="nav-item" style="min-width: 6%;">
+                    <a href="/createpost" class="nav-link btn btn-info text-white">Post</a>
                 </li>
 
                 <!-- Login -->
-                <li style="justify-self: last baseline;" class="nav-item mx-0">
+                <li class="nav-item mx-5" style="min-width: 5%;">
                     <a class="nav-link btn btn-success" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
                 </li>
             </ul>
