@@ -27,6 +27,9 @@
                     <div class="form-group">
                         <input type="email" class="form-control" id="sfsuEmailSignup" placeholder="SFSU email" required
                                pattern=".*@sfsu\.edu$|.*@mail\.sfsu\.edu$">
+                        <div class="invalid-feedback">
+                            Please enter a valid SFSU email address (e.g., yourname@sfsu.edu or yourname@mail.sfsu.edu).
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -34,12 +37,18 @@
                         <div class="form-group col-md-6">
                             <input type="password" class="form-control" id="passwordSignup" placeholder="Password"
                                    required>
+                            <div class="invalid-feedback">
+                                Password must be at least 8 characters long.
+                            </div>
                         </div>
 
                         <!-- Confirm Password Input using Bootstrap Grid for smaller field-->
                         <div class="form-group col-md-6">
                             <input type="password" class="form-control" id="confirmPassword"
                                    placeholder="Confirm password" required>
+                            <div class="invalid-feedback">
+                                Passwords do not match.
+                            </div>
                         </div>
                     </div>
 
