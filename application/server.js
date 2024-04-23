@@ -38,12 +38,15 @@ app.get('/search', search.searchItems, async function (req, res) {
     const searchQuery = req.query.query || ''; // Fallback to an empty string if no keywords are provided
     const items = res.locals.items || []; // Fallback to an empty array if no items are set by the middleware
     const categories = await getCategoriesModule.getCategories(req, res);
+    const currentCategory = req.query.category || '';
+
     // Render the 'search' view with necessary data
     res.render('search', {
         items: items,
         searchQuery: searchQuery, // Pass the search query for display
         totalResults: items.length, // Pass the total number of results found
-        categories: categories // Pass the categories for nav.ejs
+        categories: categories, // Pass the categories for nav.ejs
+        currentCategory: currentCategory // Pass the current category name for category search filter
     });
 });
 

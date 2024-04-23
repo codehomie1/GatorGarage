@@ -10,39 +10,53 @@
         <!-- TODO : PASS EJS INFO TO MODAL POP UP-->
         <%- include('./partials/message') %>
 
-        <h1>Results</h1>
-        <p>
-            <% if (isEmptyResult) { %>
-                No results found for "<%= searchQuery %>", but here are some curated selections:
-            <% } else { %>
-                <%= items.length %> results for "<%= searchQuery %>"
-            <% } %>
-        </p>
+        <div id="results-container" class="container p-4">
 
-        <main class="container mt-4">
+            <p class="fs-5">
+                <% if (searchQuery === "") { %>
+                    <% if (currentCategory === "All" || currentCategory === "") { %>
+                        <%= items.length %> total items found on Gator Garage
+                    <% } else { %>
+                        <%= items.length %> items found in <%= currentCategory %>
+                    <% } %>
+                <% } else if (isEmptyResult) { %>
+                    No results found for "<%= searchQuery %>", but here are some curated selections:
+                <% } else { %>
+                    <%= items.length %> results for "<%= searchQuery %>"
+                <% } %>
+            </p>
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <% items.forEach(item => { %>
-                    <div class="col">
-                        <div class="card h-100 m-auto" style="max-width: 18rem;">
-                            <img src="<%= item.itemPicture %>" class="card-img-top" style="height: 150px; object-fit: cover;"
-                                 alt="Image of <%= item.itemName %>">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= item.itemName %></h5>
-                                <% if (item.course) { %>
-                                    <p class="card-text mb-0"><strong>Course:</strong> <%= item.course %></p>
-                                <% } %>
-                                <p class="card-text mb-0"><strong>Description:</strong> <%= item.itemDescription %></p>
-                                <p class="card-text mb-0"><strong>Price:</strong> $<%= item.itemPrice %></p>
-                                <!---<button type="button" class="btn btn-primary mt-3" onclick="window.location.href='/item-details/<%# item.postId %>'">View Details</button> -->
-                                <button type="button" class="btn btn-primary mt-3 message-button" data-bs-toggle="modal" data-target="#messageModal" data-post-id="<%= item.postId %>">Message Seller</button>
+
+            <main class="container mt-4">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <% items.forEach(item => { %>
+                        <div class="col">
+                            <div class="card h-100 m-auto" style="max-width: 18rem;">
+                                <img src="<%= item.itemPicture %>" class="card-img-top"
+                                     style="height: 150px; object-fit: cover;"
+                                     alt="Image of <%= item.itemName %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= item.itemName %></h5>
+                                    <% if (item.course) { %>
+                                        <p class="card-text mb-0"><strong>Course:</strong> <%= item.course %></p>
+                                    <% } %>
+                                    <p class="card-text mb-0"><strong>Description:</strong> <%= item.itemDescription %>
+                                    </p>
+                                    <p class="card-text mb-0"><strong>Price:</strong> $<%= item.itemPrice %></p>
+                                    <!---<button type="button" class="btn btn-primary mt-3" onclick="window.location.href='/item-details/<%# item.postId %>'">View Details</button> -->
+                                    <button type="button" class="btn btn-primary mt-3 message-button"
+                                            data-bs-toggle="modal" data-target="#messageModal"
+                                            data-post-id="<%= item.postId %>">Message Seller
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                <% }); %>
-            </div>
-        </main>
+                    <% }); %>
+                </div>
+            </main>
+        </div>
 
         <script>
         document.addEventListener("DOMContentLoaded", function() {
