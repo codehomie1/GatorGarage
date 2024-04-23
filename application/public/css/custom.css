@@ -1,3 +1,24 @@
+/*Custom CSS to supplement bootstrap CSS*/
+
 .box-shadow {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */
+}
+
+/* Homepage Category Display */
+.carousel-fade .carousel-item {
+  opacity: .4;
+  transition: opacity 2s;
+}
+
+.carousel-control-prev {
+  transform: translate(-60%, -10%);
+}
+
+.carousel-control-next {
+  transform: translate(60%, -10%);
+}
+
+/* Site Access Modals: Sign up, Login */
+.modal-title {
+  margin-right: -48px; /* Align title center */
 }

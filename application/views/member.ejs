@@ -10,24 +10,28 @@
         }
     </style>
 </head>
-    <body class="d-flex flex-column vh-100">
+    <body>
     <%- include('./partials/nav') %>
-    <div class="container text-center">
-        <h1 class="my-4">Team Member Information</h1>
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title"><%= data.name %></h5>
-            </div>
-            <div class="card-body">
-                <img src="/img/<%= data.id %><%= data.type %>" class="img-fluid rounded-circle" style="max-width: 500px;" alt="Profile Picture">
-                <p class="card-text">Role: <%= data.role %></p>
-                <p class="card-text">Bio: <%= data.bio %></p>
-            </div>
-            <div class="card-footer">
-                <a href="/about" class="btn btn-primary">Back to Team</a>
+
+    <div id="page-content" style="min-height: 100vh;" class="container-fluid text-center align-items-start border-dark d-flex">
+        <div class="container">
+            <h1 class="p-3 display-5 my-5">Team Member Information</h1>
+            <div class="card m-5">
+                <div class="card-header">
+                    <h5 class="card-title"><%= data.name %></h5>
+                </div>
+                <div class="card-body">
+                    <img src="/img/<%= data.id %><%= data.type %>" class="img-fluid rounded-circle" style="max-width: 500px;" alt="Profile Picture">
+                    <p class="card-text">Role: <%= data.role %></p>
+                    <p class="card-text"><%=data.bio %></p>
+                </div>
+                <div class="card-footer">
+                    <a href="/about" class="btn btn-primary">Back</a>
+                </div>
             </div>
         </div>
     </div>
+
     <%- include('./partials/footer') %>
 </body>
 </html>
