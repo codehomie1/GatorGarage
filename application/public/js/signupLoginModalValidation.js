@@ -1,45 +1,32 @@
-document.addEventListener('DOMContentLoaded', function () {
-  'use strict';
+    document.addEventListener('DOMContentLoaded', function () {
+        var signupForm = document.getElementById('signupForm');
+        var password = document.getElementById('passwordSignup');
+        var confirmPassword = document.getElementById('confirmPassword');
+        var email = document.getElementById('sfsuEmailSignup');
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation');
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(function(form) {
-    form.addEventListener('submit', event => {
-      const password = document.getElementById('passwordSignup');
-      const confirmPassword = document.getElementById('confirmPassword');
-
-      if (form.id === 'signupForm') {
-        if (password.value !== confirmPassword.value) {
-          event.preventDefault();
-          confirmPassword.setCustomValidity('Passwords do not match');
-          confirmPassword.reportValidity();
-        } else {
-          confirmPassword.setCustomValidity('');
+        function validateEmail() {
+            if (!email.checkValidity()) {
+                email.classList.add('is-invalid');
+                email.reportValidity();
+            } else {
+                email.classList.remove('is-invalid');
+            }
         }
-      }
 
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+        email.addEventListener('input', validateEmail);
 
-      form.classList.add('was-validated');
-    }, false);
-  });
+        signupForm.addEventListener('submit', function (event) {
+            if (password.value !== confirmPassword.value) {
+                event.preventDefault();
+                confirmPassword.setCustomValidity('Passwords do not match');
+                confirmPassword.reportValidity();
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
 
-  // Correctly select modal close buttons and add reset logic
-  const closeButtons = document.querySelectorAll('[data-dismiss="modal"]');
-
-  closeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const modal = button.closest('.modal'); // Find closest parent modal
-      const forms = modal.querySelectorAll('.needs-validation');
-      forms.forEach(form => {
-        form.reset(); // Reset forms within modal
-        form.classList.remove('was-validated'); // Remove validation classes
-      });
+            if (!signupForm.checkValidity()) {
+                event.preventDefault();
+                signupForm.classList.add('was-validated');
+            }
+        });
     });
-  });
-});
