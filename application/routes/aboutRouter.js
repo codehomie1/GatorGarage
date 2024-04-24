@@ -1,3 +1,10 @@
+/**
+ * About Router - Gator Garage Web Application
+ *
+ * This module defines the routes related to the 'About Us' section of the application. It includes middleware to fetch categories and specific routes
+ * for each team member's details, leveraging the 'teamInfo' data array and 'getCategories' middleware for enhanced navigation.
+ */
+
 // Import required modules
 const express = require('express');
 const teamInfo = require('../public/js/teamData');

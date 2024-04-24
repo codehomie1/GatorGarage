@@ -1,3 +1,11 @@
+/**
+ * Get Categories Middleware - Gator Garage Web Application
+ *
+ * This module provides middleware functions to fetch category information from the database. It includes:
+ * - getCategories: Retrieves category names for use in the navigation bar.
+ * - getCategoriesWithPictures: Retrieves category names and pictures for display on the homepage.
+ */
+
 const db = require('../conf/database');
 
 module.exports = {

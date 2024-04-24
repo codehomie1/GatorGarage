@@ -1,4 +1,8 @@
-/*Custom CSS to supplement bootstrap CSS*/
+/**
+ * Custom Styles - Gator Garage Web Application
+ *
+ * This CSS file enhances specific UI elements beyond the default Bootstrap styling. It includes customizations for shadows on certain components like footers, specific animations and visibility for carousel items, adjustments in navigation arrow positioning, and modal title alignment.
+ */
 
 .box-shadow {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */

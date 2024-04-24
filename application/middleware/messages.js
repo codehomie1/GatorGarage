@@ -1,3 +1,12 @@
+/**
+ * Messages Middleware - Gator Garage Web Application
+ *
+ * This module defines middleware functions to manage user messages within the platform. It provides functions for:
+ * - getUserMessages: Retrieves all messages received by a user, joined with itemPost data for context.
+ * - getMessageDetails: Fetches details of an individual message including info about the related item and users involved.
+ * - messageUser: Attaches item and user details to the response object for messaging context, aiding in constructing user messages.
+ */
+
 const db = require('../conf/database');
 
 module.exports = {

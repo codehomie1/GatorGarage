@@ -1,4 +1,8 @@
-
+/**
+ * Navigation Styling - Gator Garage Web Application
+ *
+ * This CSS file customizes the appearance and responsiveness of the navigation bar across the Gator Garage platform. It ensures consistent center alignment, no wrapping in navigation links, and customizes input groups for search functionality.
+ */
 
 .navbar {
     justify-content: center;

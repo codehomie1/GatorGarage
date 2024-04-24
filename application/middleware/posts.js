@@ -1,3 +1,11 @@
+/**
+ * Posts Middleware - Gator Garage Web Application
+ *
+ * This module provides middleware functions to interact with post-related data within the platform. It supports:
+ * - getPostInfo: Retrieves detailed information about a specific post including the associated seller details.
+ * - getUserPosts: Fetches all posts made by a specific user, sorted by post date in descending order.
+ */
+
 const db = require('../conf/database');
 
 module.exports = {

@@ -1,3 +1,24 @@
+/**
+ * Express Server Configuration and API Routing
+ *
+ * This JavaScript file configures an Express.js web server and defines various API endpoints to handle different functionalities of the web application.
+ * This setup includes middleware for message handling, category and post management, and rendering views using EJS templates.
+ * The server uses environment variables for configuration settings and static files serving.
+ *
+ * @requires dotenv - Manages environment configurations.
+ * @requires express - Framework for handling and routing HTTP requests.
+ * @requires ./routes/aboutRouter - Routes for about page information.
+ * @requires ./middleware/messages - Middleware for messaging functionalities.
+ * @requires ./middleware/search - Middleware for search operations.
+ * @requires ./middleware/getCategories - Middleware for fetching category-related data.
+ * @requires ./middleware/posts - Middleware for operations related to posts.
+ *
+ * @fileoverview - Application initialization and routing logic are set here where:
+ *                 - Different page routes render specific views.
+ *                 - Middleware is used for processing requests like searching and messaging.
+ *                 - Error handling and server responses are managed extensively across various routes.
+ */
+
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');

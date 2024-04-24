@@ -1,3 +1,12 @@
+/**
+ * Search Middleware - Gator Garage Web Application
+ *
+ * This module implements a middleware function to handle item searching based on a query and optionally filtered by category.
+ * It supports:
+ * - searchItems: Processes search queries to fetch matching items from the database, including adjustments for category selection,
+ *   and handles edge cases such as empty results or generalized searches.
+ */
+
 const db = require('../conf/database');
 
 module.exports = {

@@ -1,3 +1,16 @@
+<!--
+  Search Results Page - Gator Garage Web Application
+
+  This HTML document, powered by EJS templates, handles the display of search results and interactive messaging within the Gator Garage marketplace. It includes dynamic content display for listed items, integrated navigation, and modals for direct user interactions.
+
+  Features:
+  - Display of search results based on user queries or selected categories.
+  - Interactive modals for messaging sellers.
+  - Partial templates for consistent page layout, including navigation and footer.
+
+  Core components include navigation bar, search results display, item detail modals, and footer, all managed through embedded JavaScript and EJS templating for real-time content updates.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,10 +32,15 @@
                     <% } else { %>
                         <%= items.length %> items found in <%= currentCategory %>
                     <% } %>
+                <% } else if (isEmptyResult && (currentCategory === "All" || currentCategory === "")) { %>
+                    No results found for "<%= searchQuery %>" on Gator Garage, but here are some curated selections:
                 <% } else if (isEmptyResult) { %>
-                    No results found for "<%= searchQuery %>", but here are some curated selections:
+                    No results found for "<%= searchQuery %>" in <%= currentCategory %>, but here are some curated
+                    selections:
+                <% } else if (currentCategory === "All" || currentCategory === "") { %>
+                    <%= items.length %> results for "<%= searchQuery %>" on Gator Garage
                 <% } else { %>
-                    <%= items.length %> results for "<%= searchQuery %>"
+                    <%= items.length %> results for "<%= searchQuery %>" in <%= currentCategory %>
                 <% } %>
             </p>
 
@@ -86,7 +104,7 @@
                                         <p class="card-text mb-3" id="productDescription"><strong>Description:</strong> ${postDetails.itemDescription}</p>
                                         ${courseHTML}
                                         <p class="card-text mb-3" id="itemPrice"><strong>Price:</strong> $${postDetails.itemPrice}</p>
-                                        <p class="card-text mb-3" id="pickupLocation"><strong>Pickup Location:</strong> ${postDetails.location}</p>
+                                        <p class="card-text mb-3" id="pickupLocation"><strong>SFSU Secure Pickup Location:</strong> ${postDetails.location}</p>
                                         <div class="form-group">
                                             <label class="fw-bold" for="message">Message:</label>
                                             <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your message here..."></textarea>
