@@ -46,8 +46,26 @@
             </div>
             <div class="mb-3">
               <label for="location" class="form-label">Location*</label>
-              <input type="text" class="form-control is-invalid" id="location" name="location" required="" data-gtm-form-interact-field-id="1" placeholder="SFSU Location">
-            </div>
+              <select class="form-control is-invalid" id="location" name="location" required="" data-gtm-form-interact-field-id="1" onchange="toggleOtherInput()">
+                  <option value="">Select Location</option>
+                  <option value="Administration">Administration</option>
+                  <option value="Business">Business</option>
+                  <option value="Cesar Chavez Student Center">Cesar Chavez Student Center</option>
+                  <option value="Creative Arts Building">Creative Arts Building</option>
+                  <option value="J. Paul Leonard Library">J. Paul Leonard Library</option>
+                  <option value="Science Building">Science Building</option>
+                  <option value="Fine Arts Building">Fine Arts Building</option>
+                  <option value="Ethnic Studies & Psychology Building">Ethnic Studies & Psychology Building</option>
+                  <option value="Hensill Hall">Hensill Hall</option>
+                  <option value="Burk Hall">Burk Hall</option>
+                  <option value="Humanities Building">Humanities Building</option>
+                  <option value="Other">Other</option>
+              </select>
+          </div>
+          <div class="mb-3 d-none" id="otherLocationDiv">
+              <label for="otherLocation" class="form-label">Other Location</label>
+              <input type="text" class="form-control" id="otherLocation" name="otherLocation" placeholder="Enter Your Location">
+          </div>          
             <div class="mb-3">
               <label for="description" class="form-label">Description*</label>
               <textarea class="form-control is-invalid" id="description" name="description" rows="3" required="" data-gtm-form-interact-field-id="0" placeholder="Enter your compelling description here..."></textarea>
@@ -76,6 +94,22 @@
           const preview = document.getElementById('preview-image');
           preview.src = URL.createObjectURL(event.target.files[0]);
         });
+
+        // script for showing other location field when "Other" is selected
+        function toggleOtherInput() {
+          var locationSelect = document.getElementById("location");
+          var otherLocationDiv = document.getElementById("otherLocationDiv");
+          var otherLocationInput = document.getElementById("otherLocation");
+          
+          if (locationSelect.value === "Other") {
+              otherLocationDiv.classList.remove("d-none");
+              otherLocationInput.required = true;
+          } else {
+              otherLocationDiv.classList.add("d-none");
+              otherLocationInput.required = false;
+              otherLocationInput.value = ""; // Clear any previous input
+          }
+    }
       </script>
 </body>
 
