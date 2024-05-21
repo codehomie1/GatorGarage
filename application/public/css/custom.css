@@ -4,25 +4,98 @@
  * This CSS file enhances specific UI elements beyond the default Bootstrap styling. It includes customizations for shadows on certain components like footers, specific animations and visibility for carousel items, adjustments in navigation arrow positioning, and modal title alignment.
  */
 
+
+/* Item cards */
+.thumbnail {
+  background-color: white;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.thumbnail:hover {
+  background-color: #FAFAFA;
+  opacity: 0.9;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+
+/* Homepage specific Item cards hover effects */
+.homepage-thumbnail {
+  background-color: white;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-thumbnail:hover {
+  background-color: #FAFAFA;
+  box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+  }
+
+
+
+
 .box-shadow {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); /* Used for footer */
 }
 
 /* Homepage Category Display */
 .carousel-fade .carousel-item {
-  opacity: .4;
-  transition: opacity 2s;
+    opacity: .4;
+    transition: opacity 2s;
 }
 
 .carousel-control-prev {
-  transform: translate(-60%, -10%);
+    transform: translate(-60%, -10%);
 }
 
 .carousel-control-next {
-  transform: translate(60%, -10%);
+    transform: translate(60%, -10%);
 }
 
 /* Site Access Modals: Sign up, Login */
 .modal-title {
-  margin-right: -48px; /* Align title center */
+    margin-right: -48px; /* Align title center */
 }
+
+/* Custom Responsive Font Sizes */
+@media (max-width: 768px) {
+    /* Medium devices (tablets, 768px and up) */
+    .text-md-small {
+        font-size: 0.9rem !important; /* Smaller text on medium devices */
+    }
+
+    .text-md-small-bold {
+        font-size: 0.9rem !important;
+        font-weight: bold;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Small devices (landscape phones, less than 768px) */
+    .text-sm-small {
+        font-size: 0.8rem !important; /* Even smaller text on small devices */
+    }
+
+    .text-sd-small-bold {
+        font-size: 0.9rem !important;
+        font-weight: bold;
+    }
+}
+
+/* For smaller buttons on smaller screens (used for message button)*/
+.btn-sm-small {
+    padding: .25rem .5rem;
+    font-size: .775rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 576px) {
+    /* Adjust breakpoint as needed */
+    .btn-sm-small {
+        font-size: 0.8rem; /* Smaller text on smaller screens */
+    }
+}
+

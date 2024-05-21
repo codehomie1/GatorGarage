@@ -7,6 +7,9 @@
  *
  * @requires dotenv - Manages environment configurations.
  * @requires express - Framework for handling and routing HTTP requests.
+ * @requires session - Middleware used to store and manage user - specific data.
+ * @requires multer - Middleware used for file uploads.
+ * @requires sharp - Library for generating thumbnails for item pictures
  * @requires ./routes/aboutRouter - Routes for about page information.
  * @requires ./middleware/messages - Middleware for messaging functionalities.
  * @requires ./middleware/search - Middleware for search operations.
@@ -19,57 +22,111 @@
  *                 - Error handling and server responses are managed extensively across various routes.
  */
 
+// TODO: figure out how to organize this section
 const dotenv = require('dotenv');
 dotenv.config();
-const express = require('express');
-const aboutRouter = require('./routes/aboutRouter');
-const {getMessageDetails, messageUser} = require('./middleware/messages.js')
+const path = require('path');
+const fs = require('fs');
+const {getUserMessages, messageUser, sendMessage, deleteMessage} = require('./middleware/messages.js')
 const search = require('./middleware/search');
 const getCategoriesModule = require('./middleware/getCategories.js');
-const posts = require('./middleware/posts.js')
+const {getUserPosts, getPostInfo, deletePost} = require('./middleware/posts.js')
+const dashboard = require('./middleware/dashboard.js');
+const bodyParser = require('body-parser');
+const {ensureUserIsLoggedIn} = require("./middleware/authentication");
+// END section
 
+const express = require('express');
 const app = express();
+
+// Set up port
 const PORT = process.env.PORT || 3000;
+
+// Middleware
+
+// Sessions
+const session = require('express-session');
+app.use(session({
+    secret: 'super_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+// End Sessions
+
+
+app.use((req, res, next) => {
+    res.locals.session = req.session; // Makes session data available under 'session' in EJS views
+    res.locals.url = req.url; // Makes the URL available under 'url' in EJS views (for button highlighting based on active page)
+    next();
+});
+
+
+// Middleware to parse URL-encoded and JSON request bodies
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
+// Serve static files from 'public' directory
+app.use(express.static(path.join(__dirname, 'items')));
 
-app.get('/', async (req, res, next) => {
-    try {
-        const categories = await getCategoriesModule.getCategoriesWithPictures(req, res, next);
-        res.render('index', {categories: categories});
-    } catch (error) { 
-        console.error(error);
-        res.status(500).send('Error fetching categories');
-    }
-});
+// Routes
+// TODO / in-progress: Refactor the routes to use separate modules
+const homeRouter = require('./routes/homeRouter');
+app.use('/', homeRouter);
+
+const aboutRouter = require('./routes/aboutRouter');
+app.use('/about', aboutRouter);
+
+const authRouter = require('./routes/authRouter');
+app.use('/auth', authRouter);
+
+const searchRouter = require('./routes/searchRouter');
+app.use('/search', searchRouter);
+
+const submitRouter = require('./routes/submitRouter');
+app.use(submitRouter);
+// End of route refactoring
 
 
-app.get('/dashboard', async (req,res,next) => {
+app.get('/dashboard', ensureUserIsLoggedIn,  async (req,res,next) => {
+    const userID = req.session.userID;
+    const messages = await getUserMessages(userID, req, res, next);
+    const posts = await getUserPosts(userID, req, res, next); 
     const categories = await getCategoriesModule.getCategoriesWithPictures(req, res, next);
-    res.render('dashboard', {categories: categories});
-});
 
-app.get('/createpost', async (req,res,next) => {
-    const categories = await getCategoriesModule.getCategories(req, res);
-    res.render('createpost', { categories });
-})
-
-app.get('/search', search.searchItems, async function (req, res) {
-    const searchQuery = req.query.query || ''; // Fallback to an empty string if no keywords are provided
-    const items = res.locals.items || []; // Fallback to an empty array if no items are set by the middleware
-    const categories = await getCategoriesModule.getCategories(req, res);
-    const currentCategory = req.query.category || '';
-
-    // Render the 'search' view with necessary data
-    res.render('search', {
-        items: items,
-        searchQuery: searchQuery, // Pass the search query for display
-        totalResults: items.length, // Pass the total number of results found
-        categories: categories, // Pass the categories for nav.ejs
-        currentCategory: currentCategory // Pass the current category name for category search filter
+    dashboard.fetchUserInfo(userID, req, res)
+    .then((userInfoArray) => { 
+        const userInfo = userInfoArray[0];
+        const firstName = userInfo.firstName;
+        const lastName = userInfo.lastName;
+        const email = userInfo.email;
+        const bio = userInfo.bio;
+        // need to fetch messages / posts
+        console.log("dashboard get router");
+        console.log("---------messages start-----------");
+        //console.log(messages);
+        console.log("----------messages end -------------");
+        console.log("---------posts start-----------");
+        //console.log(posts);
+        console.log("--------posts end---------------");
+        res.render('dashboard', {categories: categories, messages: messages, posts: posts, firstName: firstName, lastName: lastName, email: email, bio: bio });
+    })
+    .catch((error) => {
+        console.error("Error submitting form: ", error);
+        res.status(500).send("Internal server error");
     });
 });
+
+
+app.get('/createpost', async (req,res,next) => {
+    res.render('createpost');
+})
+
 
 app.get('/members', function(req, res) {
     console.log("Members");
@@ -77,37 +134,21 @@ app.get('/members', function(req, res) {
     res.render('member', { teamInfo: teamInfo });
 });
 
-app.use('/about', aboutRouter);
-
-app.get('/item-details/:postId', async (req, res, next) => {
-    try {
-        console.log(req.params.postId);
-        const post = await posts.getPostInfo(req, res, next);
-        if (!post) {
-            return res.status(404).send('Post not found');
-        }
-        const categories = await getCategoriesModule.getCategories(req, res, next);
-        res.render('itemDetails', {categories: categories, post: post});
-    } catch (error) { 
-        console.error(error);
-        res.status(500).send('Error fetching categories');
-    }
-});
-
 app.get('/message/:postId', messageUser, async (req, res, next) => {
     try {
-        const postId = req.params.postId;
         // Fetch post details
-        const postDetails = await posts.getPostInfo(req, res, next);
+        const postDetails = await getPostInfo(req, res, next);
         // console.log(postDetails);
+
         // If no post details found, send 404 response
         if (!postDetails) {
             if (!res.headersSent) {
                 return res.status(404).send('Item not found');
             }
-        }
+        } 
+
         // Send postDetails as JSON data
-        res.json(postDetails);
+        res.json({ postDetails});
     } catch (error) {
         console.error(error);
         // Make sure to check if the headers have already been sent
@@ -117,8 +158,59 @@ app.get('/message/:postId', messageUser, async (req, res, next) => {
     }
 });
 
+app.post('/send-message', ensureUserIsLoggedIn, async (req, res, next) => {
+    // process passed in info and send to sendMessage
+    const messageData = req.body;
 
+    if (!messageData){
+        res.status(404).send('Error fetching messageData');
+    }
 
+    // access messageData properties like senderId, recipientId, content, postId
+    const senderId = req.session.userID; // Grab senderID from session data 
+    const recipientId = messageData.recipientId;
+    const content = messageData.content;
+    const postId = messageData.postId;
+
+    sendMessage(recipientId, senderId, content, postId)
+    .then(() => {
+        console.log("Message Sent!");
+        res.status(200).send('Message sent successfully'); // return OK status to ejs script
+    })
+    .catch((error) => {
+        console.error("Error sending message: ", error);
+        res.status(500).send("Internal server error");
+    });
+
+})
+
+app.delete('/delete-post/:id', async (req, res) => {
+    const postId = req.params.id;
+
+    try{
+        // retrieve post info before deletion to delete pictures
+        await deletePost(postId);
+        res.status(200).send('Post deleted successfully');
+    } catch (error){
+        console.log('Error deleting post:', error);
+        res.status(500).send('Failed to delete post');
+    }
+});
+
+app.delete('/delete-message/:id', async (req, res) => {
+    const msgId = req.params.id;
+
+    try{
+        console.log('in delete-msg');
+        console.log(msgId);
+
+        await deleteMessage(msgId);
+        res.status(200).send('Message deleted successfully');
+    } catch (error){
+        console.log('Error deleting post:', error);
+        res.status(500).send('Failed to delete post');
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

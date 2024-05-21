@@ -1,0 +1,68 @@
+<!--
+  File: itemCardDisplay.ejs
+  Description: This EJS partial is used to display an individual item card in various parts of the application.
+               Each card represents a unique item and includes an image, title, and various attributes such as
+               course information (if applicable), description, and price. The card also includes a button that
+               triggers a modal for messaging the seller.
+
+  Usage:
+    - This partial is intended to be included within a loop that iterates over an array of items.
+    - It expects an 'item' object that contains the necessary properties to populate the card:
+      - item.itemPicture: URL of the item's image.
+      - item.itemName: Name of the item.
+      - item.course: (optional) Course associated with the item, if any.
+      - item.itemDescription: Description of the item.
+      - item.itemPrice: Price of the item.
+      - item.postId: Unique identifier for the item, used to target the correct item in the messaging modal.
+
+  Dependencies:
+    - Bootstrap for layout and styling.
+    - The parent view must include Bootstrap and define a modal with an ID that matches 'messageModal'.
+    - The parent view must include a script that listens for the 'message-button' class and opens the modal with the correct postId.
+
+  Maintainer: Cesar A. Herrera, Akram Alraeeini
+-->
+
+<style>
+    /* Hide 'Course' when no data is there, but maintain structure so cards stay consistent */
+    .invisible {
+        visibility: hidden;
+    }
+</style>
+
+<div class="row d-flex p-2">
+    <div class="col">
+        <div class="card h-100 m-auto <%= url.startsWith('/search') ? 'thumbnail' : 'homepage-thumbnail' %> shadow-sm message-card"
+             style="cursor: pointer;" data-post-id="<%= item.postId %>">
+            <img src="<%= item.itemThumbnail %>" class="card-img-top" style="object-fit: cover;"
+                 alt="Image of <%= item.itemName %>">
+            <div class="card-body d-flex flex-column">
+                <div class="flex-grow-1">
+                    <h5 class="card-title text-md-small-bold text-sm-small-bold text-center m-1 text-truncate">
+                        <%= item.itemName %></h5>
+                    <p class="card-text mb-0 text-md-small text-sm-small d-none d-md-block pt-2 pb-2 text-truncate text-center">
+                        <strong></strong> <%= item.itemDescription %></p>
+                </div>
+                <% if (item.course) { %>
+                    <p class="card-text text-md-small text-sm-small text-center d-inline-block text-truncate m-0">
+                        <strong>Course:</strong> <%= item.course %>
+                    </p>
+                <% } else { %>
+                    <p class="card-text text-md-small text-sm-small text-center d-inline-block invisible m-0">
+                        <strong>Course:</strong> N/A
+                    </p>
+                <% } %>
+                <div class="mt-auto">
+                    <p class="card-text mb-0 text-md-small text-sm-small pt-2 d-flex justify-content-center">
+                        <strong>$<%= item.itemPrice %> </strong>
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary mt-3 message-button btn-sm-small text-wrap"
+                                data-post-id="<%= item.postId %>" onclick="event.stopPropagation();">Message Seller
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

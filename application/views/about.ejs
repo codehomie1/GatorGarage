@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
     <%- include('./partials/head') %> <!-- Include the contents of head file -->
+    <title>About the Team - Meet the Creators of GatorGarage</title>
 </head>
     <body>
 <%- include('./partials/nav') %> <!-- Include the navbar -->
@@ -22,8 +23,8 @@
             <% teamInfo.forEach(member => { %>
                 <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
                     <a href="/about/<%= member.id %>">
-                    <div id="<%= member.id %>" class="card h-100 shadow"> <!-- Add h-100 class to make cards the same height -->
-                        <img src="/img/<%= member.id %><%=member.type %>" class="card-img-top" alt="...">
+                    <div id="<%= member.id %>" class="card shadow" style="height: 400px;"> 
+                        <img src="/img/<%= member.id %><%=member.type %>" class="card-img-top object-fit-cover" style="height: 200px;" alt="team member profile picture">
                         <div class="card-body">
                             <h5 id="name" class="card-title fs-4"><%= member.name %></h5>
                             <p class="card-text fs-6 "><%= member.role %></p>

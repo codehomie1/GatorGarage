@@ -1,0 +1,263 @@
+<div id="create-post-tab" class="container tab-pane fade" role="tabpanel">
+
+  <style>
+    /* Customize the look of select dropdown arrows to make more visible */
+    .custom-select {
+      appearance: none;
+      /* Remove default appearance */
+      background-color: #fff;
+      border: 1px solid #ced4da;
+      padding-right: 30px;
+      /* Space for the custom arrow */
+    }
+  </style>
+
+  <div class="container row d-flex mt-5">
+    <div class="col-md-6">
+      <form class="submit-post-form" data-gtm-form-interact-id="0" enctype="multipart/form-data" action="/submit"
+        method="POST">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title*</label>
+          <input type="text" id="title" name="title" required="" div="" data-gtm-form-interact-field-id="1"
+            class="form-control mb-3 is-invalid" placeholder="Enter Title here..." oninput="toggleTitlePreview()">
+          <div class="mb-3">
+            <label for="course" class="form-label">Related SFSU Course</label>
+            <input type="text" class="form-control" id="course" name="course" placeholder="Ex: CSC 648"
+              oninput="toggleCoursePreview()">
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category*</label>
+            <div class="input-group">
+              <select class="form-select is-invalid custom-select" id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="2">Books</option>
+                <option value="3">Technology</option>
+                <option value="4">Clothing</option>
+                <option value="5">School Supplies</option>
+                <option value="6">Furniture</option>
+                <option value="7">Appliances</option>
+                <option value="8">Sports and Fitness</option>
+                <option value="9">Miscellaneous</option>
+              </select>
+            </div>
+          </div>
+
+
+          <div class="mb-3">
+            <label for="price" class="form-label">Price*</label>
+            <input type="number" class="form-control is-invalid" id="price" name="price" required=""
+              data-gtm-form-interact-field-id="0" placeholder="24.99" min="0" oninput="togglePricePreview()">
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">Exchange Location</label>
+            <div class="input-group">
+              <select class="form-control form-select custom-select" id="location" name="location"
+                onchange="toggleOtherInput()">
+                <option value="">Select Location</option>
+                <option value="Administration">Administration</option>
+                <option value="Business">Business</option>
+                <option value="Cesar Chavez Student Center">Cesar Chavez Student Center</option>
+                <option value="Creative Arts Building">Creative Arts Building</option>
+                <option value="J. Paul Leonard Library">J. Paul Leonard Library</option>
+                <option value="Science Building">Science Building</option>
+                <option value="Fine Arts Building">Fine Arts Building</option>
+                <option value="Ethnic Studies & Psychology Building">Ethnic Studies & Psychology Building</option>
+                <option value="Hensill Hall">Hensill Hall</option>
+                <option value="Burk Hall">Burk Hall</option>
+                <option value="Humanities Building">Humanities Building</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="googleMapsLinks">
+            <!-- The selected Google Maps link will be displayed here -->
+          </div>
+          <div class="mb-3 d-none" id="otherLocationDiv">
+            <label for="otherLocation" class="form-label">Other Location</label>
+            <input type="text" class="form-control" id="otherLocation" name="otherLocation"
+              placeholder="Enter Your Location">
+          </div>
+          <div class="my-3">
+            <label for="description" class="form-label">Description*</label>
+            <textarea class="form-control is-invalid" id="description" name="description" rows="3" required=""
+              data-gtm-form-interact-field-id="0" placeholder="Enter your compelling description here..."
+              oninput="toggleDescriptionPreview()"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Image*</label>
+            <input type="file" class="form-control" id="image" name="image"
+              data-gtm-form-interact-field-id="0" required="">
+            <input type="hidden" id="imageName" name="imageName">
+          </div>
+          <button type="submit" class="btn btn-success w-50">Submit</button>
+        </div>
+        <p class="alert alert-info">Once submitted, your post will be pending admin approval. This may take up to 24
+          hours. Thank you for your patience.</p>
+      </form>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <div class="display-5 mb-3 mt-3">Post Preview</div>
+
+        <div class="card h-100 m-auto" style="max-width: 18rem;">
+          <img id="preview-image" src="https://placehold.co/700?text=image&font=roboto"
+            class="card-img-top" style="height: 15rem;" alt="uploaded image">
+          <div class="card-body d-flex flex-column">
+            <div class="flex-grow-1">
+              <h5 id='title-preview' class="text-md-small-bold text-sm-small-bold text-center" style="height: 50px;">
+              </h5>
+              <p id="description-preview"
+                class="card-text mb-0 text-md-small text-sm-small d-none d-md-block pt-2 pb-2 text-center">
+              </p>
+            </div>
+            <div>
+              <p id="course-parent" class="course-info card-text text-md-small text-sm-small text-center">
+                <strong>Course:<span class="ml-1" id="course-preview"></span></strong>
+              </p>
+            </div>
+            <div class="mt-auto">
+              <p class=" card-text mb-0 text-md-small text-sm-small pt-2 d-flex justify-content-center">
+                <strong id="price-preview"></strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+  // script for showing image
+  document.getElementById('image').addEventListener('change', function (event) {
+    const preview = document.getElementById('preview-image');
+    preview.src = URL.createObjectURL(event.target.files[0]);
+  });
+
+  // Add an event listener to the file input to capture the filename
+  document.getElementById('image').addEventListener('change', function (event) {
+    // Get the uploaded file
+    const file = event.target.files[0];
+    // Set the value of the hidden input field to the filename
+    document.getElementById('imageName').value = file.name;
+  });
+
+
+  function toggleCoursePreview() {
+    // Get the value of the course input called course-preview its an id
+    let courseInput = document.getElementById("course");
+    let courseInputValue = courseInput.value;
+    let coursePreview = document.getElementById("course-preview");
+    let courseParent = document.getElementById("course-parent");
+
+    // Set the text of the course-preview element to the value of the course input
+    if (courseInputValue === "") {
+      courseParent.classList.add("d-none");
+    } else {
+      courseParent.classList.remove("d-none");
+      coursePreview.innerText = courseInputValue;
+    }
+  }
+
+  function toggleTitlePreview() {
+    // Get the value of the title input called title-preview its an id
+    let titleInput = document.getElementById("title");
+    let titleValue = titleInput.value;
+    let titlePreview = document.getElementById("title-preview");
+
+    // Set the text of the title-preview element to the value of the title input
+    if (titleValue === "") {
+      titlePreview.innerText = titleInput.getAttribute('placeholder');
+      //console.log(titlePreview.innerText);
+    } else {
+      titlePreview.innerText = titleValue;
+    }
+  }
+
+  function toggleDescriptionPreview() {
+    // Get the value of the description input called description-preview its an id
+    let descriptionInput = document.getElementById("description");
+    let descriptionValue = descriptionInput.value;
+    let descriptionPreview = document.getElementById("description-preview");
+
+    // Set the text of the description-preview element to the value of the description input
+    if (descriptionValue === "") {
+      descriptionPreview.innerText = descriptionInput.getAttribute('placeholder');
+    } else {
+      descriptionPreview.innerText = descriptionValue;
+    }
+  }
+
+  function togglePricePreview() {
+    // Get the value of the price input called price-preview its an id
+    let priceInput = document.getElementById("price");
+    let priceValue = priceInput.value;
+    let pricePreview = document.getElementById("price-preview");
+
+    // Set the text of the price-preview element to the value of the price input
+    if (priceValue === "") {
+      pricePreview.innerText = "$" + String(priceInput.getAttribute('placeholder'));
+    } else {
+      pricePreview.innerText = "$" + priceValue;
+    }
+  }
+
+  // Call the functions to set the initial values of the preview elements
+  togglePricePreview();
+  toggleDescriptionPreview();
+  toggleCoursePreview();
+  toggleTitlePreview();
+
+  // script for showing other location field when "Other" is selected
+  function toggleOtherInput() {
+    var locationSelect = document.getElementById("location");
+    var otherLocationDiv = document.getElementById("otherLocationDiv");
+    var otherLocationInput = document.getElementById("otherLocation");
+
+    // Get the value of the selected location
+    var selectedLocation = locationSelect.options[locationSelect.selectedIndex].value;
+
+    // get div for google maps
+    var googleMapsLinksDiv = document.getElementById("googleMapsLinks");
+
+    // Define the Google Maps links for each location
+    var googleMapsLinks = {
+      "Administration": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=e5e6fe15-cf33-5906-82b2-7cf0d353c860",
+      "Business": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=06a347c7-2559-5958-affe-07ec5862af98",
+      "Cesar Chavez Student Center": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=eb11a186-c4dc-59f9-b60d-23e809bdfb6c",
+      "Creative Arts Building": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=66c2c9fe-394d-56b1-b3c7-0a0a279e764c",
+      "J. Paul Leonard Library": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=ebfd145c-fdb6-5621-9166-8fab04539c43",
+      "Science Building": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=8416e2d0-a3fa-55fa-8410-93fd64c5efee",
+      "Fine Arts Building": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=8e519e89-b373-5f75-9b96-ef7c25189ad2",
+      "Ethnic Studies & Psychology Building": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=3f71693f-2b1c-5529-a30a-192a7c6d2688",
+      "Hensill Hall": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=cbd2edac-c3f1-57a4-a36f-e5b3ad097d6c",
+      "Burk Hall": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=c487d735-856e-5d29-88d0-6bc1ecec274b",
+      "Humanities Building": "https://m.sfsu.edu/home/map/index?state=detail&feed=map-campus&id=31ce8bff-c012-53c9-a2d3-2e6d89934fcb",
+    };
+
+    if (locationSelect.value === "Other") {
+      otherLocationDiv.classList.remove("d-none");
+      otherLocationInput.required = true;
+      googleMapsLinksDiv.innerHTML = ""; // Clear any previous input
+    } else {
+      otherLocationDiv.classList.add("d-none");
+      otherLocationInput.required = false;
+      otherLocationInput.value = ""; // Clear any previous input
+
+      googleMapsLinksDiv.innerHTML = '';
+
+      // Display the link for the selected location
+      if (selectedLocation in googleMapsLinks) {
+        var link = document.createElement('a');
+        link.href = googleMapsLinks[selectedLocation];
+        link.textContent = "Official SFSU Map Link for " + selectedLocation;
+        link.target = "_blank";
+        googleMapsLinksDiv.appendChild(link);
+      }
+    }
+  }
+</script>

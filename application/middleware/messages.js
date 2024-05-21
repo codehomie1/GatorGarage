@@ -10,24 +10,29 @@
 const db = require('../conf/database');
 
 module.exports = {
-    getUserMessages: async function(req,res,next){ // use for obtaining all messages sent by a single user
+    getUserMessages: async function(userID, req,res,next){ // use for obtaining all messages sent by a single user
         try {
-            // assuming userId is a URL param
-            const userId = req.params.userId;
-
-            const query = `SELECT csc648_team6DB.messages.*, csc648_team6DB.itemPost.itemName AS itemName
-            FROM csc648_team6DB.messages
-            INNER JOIN csc648_team6DB.itemPost ON csc648_team6DB.messages.postId = csc648_team6DB.itemPost.postId
-            WHERE csc648_team6DB.messages.recipientId = ?
-            ORDER BY csc648_team6DB.messages.sendTime DESC`;
-            var value = `%${userId}%`
+            const query = `SELECT messages.*, itemPost.itemName AS itemName, users.firstName AS senderName
+        FROM 
+            csc648_team6DB.messages
+        INNER JOIN 
+            csc648_team6DB.itemPost ON messages.postId = itemPost.postId
+        INNER JOIN 
+            csc648_team6DB.users ON messages.senderId = users.userId
+        WHERE 
+            messages.recipientId = ?
+        ORDER BY 
+            messages.sendTime DESC;
+        `;
+            var value = `${userID}`
             const [messages] = await db.query(query, value);
 
             // if user has no messages in DB
-            if (messages.length === 0){
-                return res.status(404).send('Messages not found');
-            }
-            return messages; // Return array of messages
+            // if (messages.length === 0){
+            //     return res.status(404).send('Messages not found');
+            // }
+            console.log("----------inside getUserMessages------------------")
+            return messages;
         } catch (error) { 
             console.error(error);
             res.status(500).send('Internal server error');
@@ -80,13 +85,43 @@ module.exports = {
             }
             else{
                 const result = messageDetails[0]
-                console.log(result)
+                console.log('in messageUser func');
+                //console.log(result)
                 res.locals.postDetails = result;
                 next();
             }   
         } catch (error){
             console.log(error);
             res.status(500).send('Internal server error');
+        }
+    },
+    sendMessage: async function (recipientID, senderID, content, postID, req, res, next){
+        try{
+            const query = `INSERT INTO csc648_team6DB.messages (recipientId, senderId, content, postId, sendTime) 
+            VALUES (?, ?, ?, ?, NOW());`
+
+            var values = [recipientID, senderID, content, postID]
+            
+            await db.query(query, values);
+
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
+    deleteMessage: async function(msgID, req, res, next){
+        try{
+            if (!msgID){
+                res.status(404).send('Error retrieving msgID');
+            }
+
+            const query = `DELETE FROM csc648_team6DB.messages WHERE messageId = ?;`
+            await db.query(query, msgID);
+
+            return Promise.resolve();
+        } catch (error){
+            console.log(error);
+            return Promise.reject(error);
         }
     }
 };

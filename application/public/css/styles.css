@@ -1,0 +1,22 @@
+.nav-link.btn {
+    overflow: hidden;
+    white-space: nowrap; /* Prevents text from breaking into next line */
+    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
+    height: 38px; /* Ensures all buttons are of the same height */
+    width: 100%; /* Ensures all buttons are of the same width */
+}
+
+@media (max-width: 768px) {
+    .nav-item {
+        max-width: 80%; /* Full width for smaller screens */
+        margin-bottom: 10px; /* Adds space between items */
+        width: 80%; /* Full width for smaller screens */
+    }
+}
+
+
+.logo {
+    text-align: center;
+}
+
+

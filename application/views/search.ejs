@@ -9,127 +9,84 @@
   - Partial templates for consistent page layout, including navigation and footer.
 
   Core components include navigation bar, search results display, item detail modals, and footer, all managed through embedded JavaScript and EJS templating for real-time content updates.
+    Maintainers: Cesar H, Jacob G, Mohammed M, Akram A
+
 -->
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <%- include('./partials/head') %>
+        <title>Search - Find Items on GatorGarage</title>
     </head>
     <body class="d-flex flex-column vh-100">
         <%- include('./partials/nav') %>
 
-
         <!-- TODO : PASS EJS INFO TO MODAL POP UP-->
-        <%- include('./partials/message') %>
 
         <div id="results-container" class="container p-4">
+            <div class="fs-5" style="display: inline">
+              <% if (items.length === 0) { %>
+                <%= message %> in <%= currentCategory %>
+              <% } else { %>
+                <%= message %> in <%= currentCategory %>
+                (<%= startIndex %> to <%= endIndex %>) from <%= totalResults %> items found
+              <% } %>
+          </div>
 
-            <p class="fs-5">
-                <% if (searchQuery === "") { %>
-                    <% if (currentCategory === "All" || currentCategory === "") { %>
-                        <%= items.length %> total items found on Gator Garage
-                    <% } else { %>
-                        <%= items.length %> items found in <%= currentCategory %>
-                    <% } %>
-                <% } else if (isEmptyResult && (currentCategory === "All" || currentCategory === "")) { %>
-                    No results found for "<%= searchQuery %>" on Gator Garage, but here are some curated selections:
-                <% } else if (isEmptyResult) { %>
-                    No results found for "<%= searchQuery %>" in <%= currentCategory %>, but here are some curated
-                    selections:
-                <% } else if (currentCategory === "All" || currentCategory === "") { %>
-                    <%= items.length %> results for "<%= searchQuery %>" on Gator Garage
-                <% } else { %>
-                    <%= items.length %> results for "<%= searchQuery %>" in <%= currentCategory %>
-                <% } %>
-            </p>
+            <!-- Sorting dropdown -->
+            <div class="fs-5" style="display: inline; float: right"  > <!-- Container to align form to the right -->
+                <form action="/search" method="get" style="display: inline-block;"> <!-- Inline block to keep form in line -->
+                    <input type="hidden" name="query" value="<%= searchQuery %>" />
+                    <input type="hidden" name="category" value="<%= currentCategory %>" />
+                    <label for="sort">Sort by:</label>
+                    <select class="fs-6" name="sort" id="sort" onchange="this.form.submit()">
+                        <option value="default" <% if (currentSort === 'default') { %>selected<% } %>>Default</option>
+                        <option value="price_asc" <% if (currentSort === 'price_asc') { %>selected<% } %>>Price: Low to High</option>
+                        <option value="price_desc" <% if (currentSort === 'price_desc') { %>selected<% } %>>Price: High to Low</option>
+                        <option value="alpha_asc" <% if (currentSort === 'alpha_asc') { %>selected<% } %>>Alphabetical: A to Z</option>
+                        <option value="alpha_desc" <% if (currentSort === 'alpha_desc') { %>selected<% } %>>Alphabetical: Z to A</option>
+                    </select>
+                </form>
+            </div>
 
 
-            <main class="container mt-4">
-
-                <div class="row row-cols-1 row-cols-md-3 g-4">
+            <main class="container mt-5">
+                <div class="row row-cols-1 row-cols-md-3 g-2">
                     <% items.forEach(item => { %>
-                        <div class="col">
-                            <div class="card h-100 m-auto" style="max-width: 18rem;">
-                                <img src="<%= item.itemPicture %>" class="card-img-top"
-                                     style="height: 150px; object-fit: cover;"
-                                     alt="Image of <%= item.itemName %>">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= item.itemName %></h5>
-                                    <% if (item.course) { %>
-                                        <p class="card-text mb-0"><strong>Course:</strong> <%= item.course %></p>
-                                    <% } %>
-                                    <p class="card-text mb-0"><strong>Description:</strong> <%= item.itemDescription %>
-                                    </p>
-                                    <p class="card-text mb-0"><strong>Price:</strong> $<%= item.itemPrice %></p>
-                                    <!---<button type="button" class="btn btn-primary mt-3" onclick="window.location.href='/item-details/<%# item.postId %>'">View Details</button> -->
-                                    <button type="button" class="btn btn-primary mt-3 message-button"
-                                            data-bs-toggle="modal" data-target="#messageModal"
-                                            data-post-id="<%= item.postId %>">Message Seller
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
+                        <%- include('./partials/itemCardDisplay', { item: item }) %>
                     <% }); %>
                 </div>
+
+
+                <!-- Pagination Controls -->
+                <% if (totalResults > limit) { %>
+                    <nav aria-label="Search results pages">
+                        <ul class="pagination justify-content-center pt-2">
+                            <% if (page > 1) { %>
+                                <li class="page-item">
+                                    <a class="page-link" href="/search?query=<%= searchQuery %>&category=<%= currentCategory %>&sort=<%= currentSort %>&page=<%= page - 1 %>&limit=<%= limit %>">Previous</a>
+                                </li>
+                            <% } %>
+                            <% for (let i = 1; i <= Math.ceil(totalResults / limit); i++) { %>
+                                <li class="page-item <%= i === page ? 'active' : '' %>">
+                                    <a class="page-link" href="/search?query=<%= searchQuery %>&category=<%= currentCategory %>&sort=<%= currentSort %>&page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+                                </li>
+                            <% } %>
+                            <% if (page * limit < totalResults) { %>
+                                <li class="page-item">
+                                    <a class="page-link" href="/search?query=<%= searchQuery %>&category=<%= currentCategory %>&sort=<%= currentSort %>&page=<%= page + 1 %>&limit=<%= limit %>">Next</a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </nav>
+                <% } %>
             </main>
-        </div>
 
-        <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const messageButtons = document.querySelectorAll('.message-button');
-            const modalBody = document.getElementById('modalBody');
-            const closeButton = document.querySelector('.close'); // Select the close button
-
-            messageButtons.forEach(function(button) {
-                button.addEventListener("click", function() {
-                    const postId = button.getAttribute('data-post-id');
-                    fetch(`/message/${postId}`)
-                        .then(response => response.json())
-                        .then(postDetails => {
-                            // Update modal content with data
-                            let courseHTML = '';
-                            if (postDetails.course) {
-                                courseHTML = `<p class="card-text mb-3" id="courseDetails"><strong>Course:</strong> ${postDetails.course}</p>`;
-                            }
-
-                            modalBody.innerHTML = `
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <h4 class="card-title" id="productName">${postDetails.itemName}</h4>
-                                        <hr class="hr bg-dark">
-                                        <img src="${postDetails.itemPicture}" alt="${postDetails.itemName} picture" class="img-thumbnail img-fluid" id="productImage" style="width: 300px; height: auto;">
-                                        <div class="mb-3"></div>
-                                        <p class="card-text mb-3" id="productDescription"><strong>Description:</strong> ${postDetails.itemDescription}</p>
-                                        ${courseHTML}
-                                        <p class="card-text mb-3" id="itemPrice"><strong>Price:</strong> $${postDetails.itemPrice}</p>
-                                        <p class="card-text mb-3" id="pickupLocation"><strong>SFSU Secure Pickup Location:</strong> ${postDetails.location}</p>
-                                        <div class="form-group">
-                                            <label class="fw-bold" for="message">Message:</label>
-                                            <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your message here..."></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 overflow-auto">
-                                        <h4 class="card-title">Seller Information</h4>
-                                        <hr class="hr bg-dark">
-                                        <p class="mb-3" id="sellerName"><strong>Seller Name:</strong> ${postDetails.sellerName}</p>
-                                        <p class="mb-3" id="sellerEmail"><strong>Contact Email:</strong> ${postDetails.sellerEmail}</p>
-                                    </div>
-                                </div>
-                        `;
-                            $('#messageModal').modal('show');
-                        })
-                        .catch(error => console.error('Error fetching post details:', error));
-                });
-            });
-            // Add click event listener to the close button
-            closeButton.addEventListener('click', function() {
-                $('#messageModal').modal('hide'); // Hide the modal
-            });
-        });
-        </script>
-        
         <%- include('./partials/footer') %>
+        <%- include('./partials/message') %> <!-- Message Modal -->
+
+        <script src="../js/setupMessageModal.js"></script>
+        </div>
     </body>
 </html>

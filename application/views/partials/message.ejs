@@ -1,5 +1,5 @@
 <!-- Message Modal -->
-<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+<div class="modal" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -12,6 +12,11 @@
                 <div class="row">
                     <!-- Message Form -->
                     <div class="col-md-8">
+                        <!-- Hidden input fields to store data -->
+                        <input type="hidden" id="senderId" value="">
+                        <input type="hidden" id="recipientId" value="">
+                        <input type="hidden" id="postId" value="">
+
                         <h5 class="card-title" id="productName"></h5>
                         <img src="" alt="" class="img-thumbnail img-fluid" id="productImage" style="width: 100px; height: auto;">
                         <div class="mb-3"></div> <!-- Add margin bottom for spacing -->
@@ -20,7 +25,10 @@
                         <p class="card-text mb-3" id="itemPrice"></p>
                         <p class="card-text mb-3" id="pickupLocation"></p>
                         <div class="form-group">
-                            <label for="message">Message:</label>
+                            <label class="fw-bold mb-0" for="message">Message:</label>
+                            <div class="mb-1">
+                                <small class="text-muted d-block">Consider including your contact information (e.g., phone number, email).</small>
+                            </div>
                             <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Type your message here..."></textarea>
                         </div>
                     </div>
@@ -33,15 +41,106 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Send</button>
+                <button type="button" class="btn btn-danger mr-auto" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="sendButton">Send</button>
             </div>
         </div>
     </div>
 </div>
 
+<div id="alertContainer" class="fixed-top w-100 d-flex justify-content-center align-items-center"></div>
+
+
+<!-- Script here (eventListener for sendButton)-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sendButton = document.getElementById('sendButton');
+        const closeButton = document.querySelector('.close');
+
+        sendButton.addEventListener("click", function () {
+            const senderId = document.getElementById('senderId').value;
+            const recipientId = document.getElementById('recipientId').value;
+            const content = document.getElementById('message').value.trim();
+            const postId = document.getElementById('postId').value;
+
+
+            // Check if all necessary data is available
+            if (senderId && recipientId && content && postId) {
+                const messageData = {
+                    senderId: senderId,
+                    recipientId: recipientId,
+                    content: content,
+                    postId: postId
+                };
+
+                // Send messageData to server endpoint
+                fetch('/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(messageData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Message sent successfully
+                        showSuccessAlert('Message sent successfully!');
+                        $('#messageModal').modal('hide');
+                    } else {
+                        // Message failed to send
+                        throw new Error('Failed to send message');
+                    }
+                })
+                .catch(error => {
+                    // Error occured during message sending
+                    showErrorAlert('Message could not be sent. Please ensure you are logged in before trying again.');
+                    console.error('Error sending message:', error);
+                });
+            } else {
+                // Incomplete message data, show error alert
+                showErrorAlert('Please fill out all required fields before sending the message.');
+                console.error('Incomplete message data');
+            }
+        });
+
+        closeButton.addEventListener('click', function () {
+            $('#messageModal').modal('hide');
+        });
+    });
+
+    function showSuccessAlert(message) {
+        const alertHtml = `
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        document.getElementById('alertContainer').innerHTML = alertHtml;
+    }
+
+    function showErrorAlert(message) {
+        const alertHtml = `
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        document.getElementById('alertContainer').innerHTML = alertHtml;
+    }
+
+</script>
+
 <style>
     .modal-header .close.opacity-90:hover {
         opacity: 0.95; /* Adjust the opacity value for hover effect */
     }
+
+    #alertContainer {
+        position: fixed;
+        top: 172px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1050;
+    }
+
 </style>

@@ -18,179 +18,62 @@
       }
 
       .tab-content {
-        height: 70vh;
+        height: 80vh;
         /* your desired height of the tab-content */
         overflow: hidden;
         overflow-y: auto;
       }
+
+       /*Styling for tabs*/
+
+.nav-tabs .nav-link {
+    border: 1px solid rgb(53, 121, 246);
+}
+      .nav-tabs .nav-link.active {
+        background-color: rgb(75, 160, 181) !important; /* Set the desired color for the active tab */
+        color: white !important;
+        text-shadow:  darkslateblue 1px 1px 1px;
+}
     </style>
 </head>
 
 <body>
   <%- include('./partials/nav') %> <!-- Include the navbar -->
 
-  <div id="page-content" class="container-fluid text-center align-items-center" style="min-height: 100vh;">
-    <!--TODO replace user with username -->
-    <h1 class="display-4 text-start mt-5 mb-5 ml-5">Welcome User</h1>
+    <div id="page-content" class="container-fluid text-center align-items-center mt-5" style="min-height: 100vh;">
 
-    <div class="row">
-      <!-- todo : get user info from  database and display it here -->
-      <div class="col-md-4">
-        <div class="card p-5">
-          <!-- todo : use use data to customize img api -->
-          <img alt="Profile Picture" class="card-img-top rounded-circle img-fluid" style="margin: auto;max-height: 400px;max-width: 400px;" src="https://ui-avatars.com/api/?format=svg">
-          <div class="card-body">
-            <h5 class="card-title">John Doe</h5>
-            <p class="card-text">johndoe@sfsu.edu</p>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-        </div>          
-      </div>
-      <!-- add tabs in this row col-md-8 -->
-      <div class="container col-md-8 border">
-        <br>
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" data-bs-toggle="tab" href="#inbox" aria-selected="true" role="tab">Inbox</a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" data-bs-toggle="tab" href="#posts" aria-selected="false" role="tab" tabindex="-1">Posts</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div id="inbox" class="container tab-pane active show" role="tabpanel"><br>
-            <h3>Inbox</h3>
-            <p>Here you will see messages from other users interested in your posts.</p>
+    <h1 class="display-4 text-start mt-5 mb-5 ml-5">Welcome <%= firstName %></h1> 
 
-            <!-- Message row - each row contains 2 messages  -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Message row - each row contains 2 messages  -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Message row - each row contains 2 messages  -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Message</h5>
-                    <p class="card-text">Content goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-          </div>
-          <div id="posts" class="container tab-pane fade" role="tabpanel"><br>
-            <h3>Posts</h3>
-            <p>Here you will be able to see your posts</p>
-            <!-- Posts row each row will contain 2 posts -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 1</h5>
-                    <p class="card-text">Content of Post 1 goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 2</h5>
-                    <p class="card-text">Content of Post 2 goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- add more post elements --> 
-            <!-- TODO : CONVERT INTO EJS LOGIC -->
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 3</h5>
-                    <p class="card-text">Content of Post 1 goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 4</h5>
-                    <p class="card-text">Content of Post 2 goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div> 
-             <!-- add more post elements --> 
-             <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 5</h5>
-                    <p class="card-text">Content of Post 1 goes here.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Post 6</h5>
-                    <p class="card-text">Content of Post 2 goes here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>      
+      <div class="row">
+        <div class="col-md-4">
+          <%- include('./dash-partials/userprofile.ejs') %>
+        </div>
+        <div class="container col-md-8 border">
+          <br>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" data-bs-toggle="tab" href="#inbox-tab" aria-selected="true"
+                role="tab">Inbox</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#posts-tab" aria-selected="false" role="tab"
+                tabindex="-1">Posts</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" data-bs-toggle="tab" href="#create-post-tab" aria-selected="false" role="tab"
+                tabindex="-1">Create Post</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <%- include('./dash-partials/tab-inbox', {messages}) %>     <!-- include tab-inbox.ejs  -->
+            <%- include('./dash-partials/tab-posts', {posts}) %>     <!-- include tab-posts.ejs  -->
+            <%- include('./dash-partials/tab-createpost') %>    <!-- include tab-create-post.ejs  -->
           </div>
         </div>
       </div>
     </div>
-  </div>
+    
     <%- include('./partials/footer') %> <!-- Include the footer -->
 </body>
+
 </html>

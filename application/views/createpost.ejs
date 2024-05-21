@@ -28,10 +28,10 @@
     <h2 class="mb-5 display-5 mt-3">Submit a Post</h2>
     <div class="container row d-flex mt-5">
       <div class="col-md-6">
-        <form class="submit-post-form" data-gtm-form-interact-id="0">
+        <form class="submit-post-form" data-gtm-form-interact-id="0" enctype="multipart/form-data" action="/submit" method="POST">
           <div class="mb-3">
             <label for="title" class="form-label">Title*</label>
-            <input type="text" id="title" name="title" required="" <="" div="" data-gtm-form-interact-field-id="1" class="form-control mb-3 is-invalid" placeholder="Enter Title here...">
+            <input type="text" id="title" name="title" required="" div="" data-gtm-form-interact-field-id="1" class="form-control mb-3 is-invalid" placeholder="Enter Title here...">
             <div class="mb-3">
               <label for="course" class="form-label">Course</label>
               <input type="text" class="form-control" id="course" name="course" placeholder="Ex: CSC 648">
@@ -73,6 +73,7 @@
             <div class="mb-3">
               <label for="image" class="form-label">Upload Image*</label>
               <input type="file" class="form-control" id="image" name="image" data-gtm-form-interact-field-id="0" required="">
+              <input type="hidden" id="imageName" name="imageName">
             </div>
             <button type="submit" class="btn btn-primary w-50">Submit</button>
           </div>
@@ -111,6 +112,16 @@
           }
     }
       </script>
+
+<script>
+  // Add an event listener to the file input to capture the filename
+  document.getElementById('image').addEventListener('change', function(event) {
+    // Get the uploaded file
+    const file = event.target.files[0];
+    // Set the value of the hidden input field to the filename
+    document.getElementById('imageName').value = file.name;
+  });
+</script>
 </body>
 
 </html>

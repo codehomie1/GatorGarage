@@ -1,0 +1,15 @@
+.card-hover {
+    transition: transform 0.2s;
+}
+
+.card-hover:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
