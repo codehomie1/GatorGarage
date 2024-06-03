@@ -24,8 +24,8 @@ const teamInfo = [
       id:3,
       name: "Mohammed Mohamed",
       role: "Frontend Lead",
-      bio: "Mohammed is in his final undergrad semester at SFSU. He enjoys software development, problem solving and teamwork. His aspirations is to extend his learning journey and complete and Masters degree." +
-      "In his free time you can find him playing sports, going to the gym, or hanging out with family and friends.",
+      bio: "Mohammed is a senior Computer Science major at SFSU. He enjoys software development, problem solving and teamwork." +
+      " In his free time you can find him playing sports, going to the gym, or hanging out with family and friends.",
       type: '.jpg'
     },
     {
