@@ -1,25 +1,60 @@
-# csc648 Repository
+# GatorGarage
 
-## Please when ready add your teams application URL or IP to the repository description. This will help with grading. Teams are expected to keep this value up to date.
+Welcome to GatorGarage, your one-stop solution for on-campus selling and buying goods.
 
-## Please do the following steps before completing Milestone 0.
-1. Change the name of the repository. All that needs to change is the NN to your respective team number. Team numbers whose value is less than 10, please pad with a 0. Ex team 1 is Team01 team 11 is Team11. Please make sure to also remove the username from the repository as well. Teams with incorrectly name repository will have points deducted from their milestone 0 grades.
-      - Please follow the naming convention assigned by your instructor.
+## Table of Contents
 
-1. PLEASE REMOVE THE USERNAME FROM THE REPOSITORY NAME!!!
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [About](#about)
 
-2. Add ALL members of your team to this repository. For it to count, they must ACCEPT the invite.
+## Introduction
 
-3. Fill out the table below
+GatorGarage is a web application designed to help SFSU students, staff, and alumni buy and sell goods safely and
+efficiently.
 
+## Features
 
-| Student Name | Student Email | GitHub Username |
-|    :---:           |           :---:          |     :---:        |
-| Utku Tarhan        | mtarhan@mail.sfsu.edu    |   utkut          |
-| Akram Alraeeini    | aalraeeini@sfsu.edu      |   Akram-Ahmed    |
-| Jacob Gerales      | jgerales@sfsu.edu        |   JAGerales      |
-| Eliza Ouyang       | eouyang@sfsu.edu         |   eliza-ouyang   |
-| Mohammed Mohammed  | mmohamed2@mail.sfsu.edu  |   codehomie1     |
-| Cesar Herrera      | cherrera@sfsu.edu        |   cesar-programs |
+- Item listing and search functions.
+- Dashboard for managing messages and items.
 
-## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
+## Installation
+
+To get started with GatorGarage, follow these steps:
+
+1. Clone the repository:
+      ```bash
+      git clone https://github.com/yourusername/GatorGarage.git
+      ```
+2. Navigate to the project directory:
+      ```bash
+      cd GatorGarage
+      ```
+3. Install the dependencies:
+      ```bash
+      npm install
+      ```
+4. Start the development server:
+      ```bash
+      npm start
+      ```
+
+## Usage
+
+Once the server is running, open your browser and navigate to `http://localhost:3000` to start using GatorGarage.
+
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## About
+
+GatorGarage is a web app where SFSU students, staff, and alumni can sell and buy goods. It provides a platform for the university community to engage in a safe and convenient marketplace.
