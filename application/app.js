@@ -26,14 +26,15 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const path = require('path');
-const fs = require('fs');
 const {getUserMessages, messageUser, sendMessage, deleteMessage} = require('./middleware/messages.js')
-const search = require('./middleware/search');
+const search = require('./middleware/search.js');
 const getCategoriesModule = require('./middleware/getCategories.js');
 const {getUserPosts, getPostInfo, deletePost} = require('./middleware/posts.js')
 const dashboard = require('./middleware/dashboard.js');
 const bodyParser = require('body-parser');
-const {ensureUserIsLoggedIn} = require("./middleware/authentication");
+const {ensureUserIsLoggedIn} = require("./middleware/authentication.js");
+const teamInfo = require('./public/js/teamData.js');
+
 // END section
 
 const express = require('express');
@@ -72,23 +73,61 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 // Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, 'items')));
+// app.use(express.static(path.join(__dirname, 'items')));
+
 
 // Routes
-// TODO / in-progress: Refactor the routes to use separate modules
-const homeRouter = require('./routes/homeRouter');
-app.use('/', homeRouter);
+app.get('/', search.getRecentPosts, async (req, res) => {
+    const categories = await getCategoriesModule.getCategoriesWithPictures(req, res);
+    const recentPosts = res.locals.recentPosts || [];
 
-const aboutRouter = require('./routes/aboutRouter');
-app.use('/about', aboutRouter);
+    //console.log("----inside refactored main page-----")
 
-const authRouter = require('./routes/authRouter');
+    res.render('layouts/main', {
+        title: "GatorGarage - SFSU's Community Platform to Buy and Sell",
+        body: '../pages/home-pg',
+        pageData: {
+            categories,
+            recentPosts
+        }
+    });
+});
+
+app.get('/about', (req, res) => {
+    //console.log("----inside refactored about page-----")
+
+    res.render('layouts/main', {
+        title: "About the Team - Meet the Creators of GatorGarage",
+        body: '../pages/about-pg',
+        pageData: {
+            teamInfo
+        }
+    })
+});
+
+app.get('/about/:id', (req, res) => {
+    const memberId = parseInt(req.params.id);
+    const member = teamInfo.find(member => member.id === memberId);
+
+    if (!member) {
+        return res.redirect('/');
+    }    
+
+    res.render('layouts/main', {
+        title: `About ${member.name}`,
+        body: '../pages/member-pg',
+        pageData: { member },
+    });
+});
+
+const authRouter = require('./routes/authRouter.js');
 app.use('/auth', authRouter);
 
-const searchRouter = require('./routes/searchRouter');
+const searchRouter = require('./routes/searchRouter.js');
 app.use('/search', searchRouter);
 
-const submitRouter = require('./routes/submitRouter');
+const submitRouter = require('./routes/submitRouter.js');
+const { title } = require('process');
 app.use(submitRouter);
 // End of route refactoring
 
@@ -130,7 +169,6 @@ app.get('/createpost', async (req,res,next) => {
 
 app.get('/members', function(req, res) {
     console.log("Members");
-    const teamInfo = require('./teamData');
     res.render('member', { teamInfo: teamInfo });
 });
 
