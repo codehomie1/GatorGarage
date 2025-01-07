@@ -1,35 +1,9 @@
 <!--
-    Title: GatorGarage - SFSU's Community Platform to Buy and Sell.
-    Description: This HTML document is the home page of GatorGarage, SFSU's community platform to buy and sell items.
-
-    External files:
-        - Partials
-            - head: Contains meta tags, CSS/JS links common across the website
-            - nav: Navigation bar across the site
-            - footer: Footer section common across the site
-            - message: Modal for user messages across the site.
-
-    Frameworks and Libraries used:
-        - Bootstrap: For styling and responsive layouts
-        - EJS: For dynamic content generation and inclusion of partials
-
-    Additional Scripts:
-        - setupMessageModal.js: Manages behavior and settings for message modals.
-
-    Maintainer: Cesar A. Herrera
+    pageData: {
+        categories,
+        recentPosts
+    }
 -->
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <%- include('./partials/head') %> <!-- Include the contents of head file -->
-    <title>GatorGarage - SFSU's Community Platform to Buy and Sell</title>
-</head>
-
-<body>
-<%- include('./partials/nav') %>
-
 
 <!-- Executive Summary -->
 <section id="exec-summary" class="container">
@@ -51,8 +25,8 @@
 </section>
 <!-- END Executive Summary -->
 
-
 <!-- Category Display: carousel with 3 items per slide -->
+<!--   variables : totalSlides: int, categories: array[],  -->
 <section id="categoryDisplay" class="container pt-2">
     <h2 class="fs-5 text-sm-small"><strong>Categories</strong></h2>
 
@@ -62,7 +36,7 @@
 
         <!-- Carousel Indicators (tabs located underneath the carousel) -->
         <ol class="carousel-indicators" style="bottom: -20px">
-            <% let totalSlides = Math.ceil(categories.length / 3); %>
+            <% let totalSlides = Math.ceil(pageData.categories.length / 3); %>
             <% for(let i = 0; i < totalSlides; i++) { %>
                 <li
                         data-bs-target="#categoryCarousel" data-bs-slide-to="<%= i %>"
@@ -72,7 +46,7 @@
 
         <!-- Carousel Generator: 3 categories per slide  -->
         <div class="carousel-inner">
-            <% categories.forEach((category, index) => { %>
+            <% pageData.categories.forEach((category, index) => { %>
                 <% if(index % 3 === 0){ %>
                 <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
                     <div class="d-flex justify-content-center">
@@ -89,7 +63,7 @@
                                 <p class="lead "><%= category.categoryName %></p>
                             </a>
                         </div>
-                        <% if(index % 3 === 2 || index === categories.length - 1){ %>
+                        <% if(index % 3 === 2 || index === pageData.categories.length - 1){ %>
                     </div>
                 </div>
                 <% } %>
@@ -116,7 +90,6 @@
 </section>
 <!-- END Category Display-->
 
-
 <!-- Recent Items Posting Section -->
 <section id="recentItemDisplay" class="container pt-2 card-hover">
     <h2 class="fs-5 text-sm-small"><strong>Recent Posts</strong></h2>
@@ -131,7 +104,7 @@
 
         <!-- Carousel Indicators (tabs located underneath the carousel) -->
         <ol class="carousel-indicators" style="bottom:-30px;">
-            <% let totalSlides2 = Math.ceil(recentPosts.length / 3); %>
+            <% let totalSlides2 = Math.ceil(pageData.recentPosts.length / 3); %>
             <% for(let i = 0; i < totalSlides2; i++) { %>
                 <li
                         data-bs-target="#recentItemCarousel" data-bs-slide-to="<%= i %>"
@@ -141,7 +114,7 @@
 
         <!-- Carousel Generator: 3 categories per slide  -->
         <div class="carousel-inner">
-            <% recentPosts.forEach((recentPost, index) => { %>
+            <% pageData.recentPosts.forEach((recentPost, index) => { %>
                 <% if(index % 3 === 0){ %>
                 <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
                     <div class="d-flex justify-content-center">
@@ -180,13 +153,3 @@
 
     </div>
 </section>
-
-
-    <%- include('./partials/message') %> <!-- Include the message modal -->
-    <%- include('./partials/footer') %> <!-- Include the footer -->
-
-    <script src="../js/setupMessageModal.js"></script>
-
-</body>
-
-</html>
