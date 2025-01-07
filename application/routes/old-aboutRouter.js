@@ -7,7 +7,7 @@
 
 // Import required modules
 const express = require('express');
-const teamInfo = require('../public/js/teamData');
+const teamInfo = require('../public/js/teamData.js');
 const { getCategories } = require('../middleware/getCategories.js');
 
 // Create a new router instance
@@ -27,7 +27,11 @@ aboutRouter.use(async (req, res, next) => {
 
 // Route handlers
 aboutRouter.get('/', (req, res) => {
-    res.render('about', {teamInfo, categories: req.categories});
+    res.render('layouts/main', {
+        body: '<%- include ("../pages/about-pg") %>',
+        teamInfo: teamInfo,
+    });
+    //res.render('about', {teamInfo, categories: req.categories});
 });
 
 aboutRouter.get('/1', (req, res) => {

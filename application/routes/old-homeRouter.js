@@ -24,7 +24,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import middleware
-const search = require('../middleware/search');
+const search = require('../middleware/search.js');
 const getCategoriesModule = require('../middleware/getCategories.js');
 
 // Define the '/' GET route
