@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Application API
+  version: 1.0.0
+  description: Core JSON endpoints for the application. Many routes render HTML and are omitted here.
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/signup:
+    post:
+      summary: Sign up
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+      responses:
+        '302':
+          description: Redirect to /dashboard on success
+        '400':
+          description: Missing fields or email already registered
+        '500':
+          description: Database error
+  /auth/login:
+    post:
+      summary: Log in
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '302':
+          description: Redirect to /dashboard on success
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Database error
+  /auth/logout:
+    post:
+      summary: Log out
+      responses:
+        '302':
+          description: Redirect to /
+  /search:
+    get:
+      summary: Search items (renders HTML)
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+        - in: query
+          name: category
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [default, price_asc, price_desc, alpha_asc, alpha_desc]
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 9
+      responses:
+        '200':
+          description: Search results page
+  /message/{postId}:
+    get:
+      summary: Get post details for messaging
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Post details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postDetails:
+                    type: object
+        '404':
+          description: Item not found
+        '500':
+          description: Error fetching message
+  /send-message:
+    post:
+      summary: Send a message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '200':
+          description: Message sent successfully
+        '500':
+          description: Internal server error
+  /delete-message/{id}:
+    delete:
+      summary: Delete a message
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Message deleted successfully
+        '500':
+          description: Failed to delete message
+  /delete-post/{id}:
+    delete:
+      summary: Delete a post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Post deleted successfully
+        '500':
+          description: Failed to delete post
+  /submit:
+    post:
+      summary: Create a new post (multipart/form-data)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [title, category, price, location, description, image]
+              properties:
+                title:
+                  type: string
+                course:
+                  type: string
+                category:
+                  type: integer
+                price:
+                  type: number
+                  format: float
+                location:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '302':
+          description: Redirect to /dashboard on success
+        '400':
+          description: Validation error
+        '500':
+          description: Failed to submit post
+components:
+  schemas:
+    SignUpRequest:
+      type: object
+      required: [firstName, lastName, email, password]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    SendMessageRequest:
+      type: object
+      required: [recipientId, content, postId]
+      properties:
+        recipientId:
+          type: integer
+        content:
+          type: string
+        postId:
+          type: integer
